@@ -83,7 +83,7 @@ namespace ProyectoFinal.rFactura
 
         private void Reportebutton_Click(object sender, EventArgs e)
         {
-            ReporteFacturas abrir = new ReporteFacturas(Convert.ToInt32(CriteriotextBox.Text));
+            ReporteFacturas abrir = new ReporteFacturas(BLL.FacturacionBLL.GetList(filtrar));
             abrir.Show();
         }
     }

@@ -9,18 +9,18 @@ namespace ProyectoFinal.Entidades
    public class Departamento
     {
         [Key]
-        public int IdDepartamento { get; set; }
+        public int DepartamentoId { get; set; }
         public string Nombre { get; set; }
 
         public Departamento(int idDepartamento, string nombre)
         {
-            this.IdDepartamento = idDepartamento;
+            this.DepartamentoId = idDepartamento;
             this.Nombre = nombre;
         }
 
         public Departamento()
         {
-            this.IdDepartamento = 0;
+            this.DepartamentoId = 0;
             this.Nombre = string.Empty;
         }
     }

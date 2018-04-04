@@ -28,7 +28,7 @@ Create Table Productoes
 go
 create table Departamentoes
 (
-	IdDepartamento int primary key identity(1,1),
+	DepartamentoId int primary key identity(1,1),
 	Nombre varchar(max)
 
 );

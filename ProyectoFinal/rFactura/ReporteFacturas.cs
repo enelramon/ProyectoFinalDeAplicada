@@ -14,18 +14,18 @@ namespace ProyectoFinal.rFactura
     public partial class ReporteFacturas : Form
     {
         List<Factura> datos = new List<Factura>();
-        public ReporteFacturas(int id/*List<Factura> bill*/)
+        public ReporteFacturas(List<Factura> bill)
         {
             InitializeComponent();
-            //datos = bill;
+            datos = bill;
         }
 
         private void ReporteFacturaViewer_Load(object sender, EventArgs e)
         {
             ReporteFactura abrir = new ReporteFactura();
             abrir.SetDataSource(datos);
-           ReporteFacturaViewer.ReportSource = abrir;
-           // ReporteFacturaViewer.SelectionFormula = "{View_Facturaciones}.Id=id";
+             ReporteFacturaViewer.ReportSource = abrir;
+            // ReporteFacturaViewer.SelectionFormula = "{View_Facturaciones}.Id=id"; {Facturaciones.ClienteId}=1
             ReporteFacturaViewer.Refresh();
         }
     }

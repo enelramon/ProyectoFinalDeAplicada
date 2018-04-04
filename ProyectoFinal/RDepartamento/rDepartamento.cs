@@ -113,7 +113,7 @@ namespace ProyectoFinal.RDepartamento
         {
             Departamento depo = new Departamento();
 
-            depo.IdDepartamento = Convert.ToInt32(IdnumericUpDown.Value);
+            depo.DepartamentoId = Convert.ToInt32(IdnumericUpDown.Value);
             depo.Nombre = NombretextBox.Text;
             return depo;
         }

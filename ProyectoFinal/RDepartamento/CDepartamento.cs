@@ -30,7 +30,7 @@ namespace ProyectoFinal.RDepartamento
                 //ID
                 case 0:
                     id = int.Parse(CriteriotextBox.Text);
-                    filtrar = t => t.IdDepartamento == id;
+                    filtrar = t => t.DepartamentoId == id;
                     break;
                 //Descripcion
                 case 1:

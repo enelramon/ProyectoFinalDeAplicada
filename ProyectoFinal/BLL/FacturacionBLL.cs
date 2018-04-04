@@ -112,6 +112,13 @@ namespace ProyectoFinal.BLL
             try
             {
                 factura = db.bill.Where(bill).ToList();
+                foreach (var item in factura)
+                {
+                    item.BillDetalle.Count();
+                }
+
+                db.Dispose();
+
                
             }
             catch (Exception)
