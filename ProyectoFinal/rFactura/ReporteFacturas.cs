@@ -22,10 +22,9 @@ namespace ProyectoFinal.rFactura
 
         private void ReporteDeFacturaViewer_Load(object sender, EventArgs e)
         {
-            ReporteDeFacturas abrir = new ReporteDeFacturas();
+            FacturaReporte abrir = new FacturaReporte();
             abrir.SetDataSource(datos);
             ReporteDeFacturaViewer.ReportSource = abrir;
-           
             ReporteDeFacturaViewer.Refresh();
         }
     }

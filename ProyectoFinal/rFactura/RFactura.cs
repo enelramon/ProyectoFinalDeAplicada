@@ -13,7 +13,7 @@ namespace ProyectoFinal.rFactura
     public partial class RFactura : Form
     {
         decimal Monto = 0;
-        bool paso = true, Arreglar = false, busco = false;
+        bool paso = true, Arreglar = false;
         Factura billes = new Factura();
         List<FacturaDetalle> Detalle = new List<FacturaDetalle>();
         public int RowSelected { get; set; }
@@ -215,7 +215,19 @@ namespace ProyectoFinal.rFactura
                             BLL.FacturacionBLL.ArreglarProductoList(Detalle);
                             Arreglar = false;
                         }
-                        Clean();
+
+                    var resultado = MessageBox.Show("Desea Imprimir un recibo?", "+Ventas",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                        if (result == DialogResult.Yes)
+                        {
+                            int id = LlenaClase().FacturaId;
+                            ReporteFacturasCliente abrir = new ReporteFacturasCliente(BLL.FacturacionBLL.GetList(x => x.FacturaId ==id ));
+                            abrir.Show();
+
+                        }
+                            Clean();
+
                     }
                     else
                     {
@@ -497,12 +509,6 @@ namespace ProyectoFinal.rFactura
 
         private void EliminarDetalle_Click(object sender, EventArgs e)
         {
-            //if (busco)
-            //{
-            //    var id = Convert.ToInt32(IDcomboBox.Text);
-            //    billes.BillDetalle = BLL.FacturaDetalleBLL.GetList(x => x.FacturaId == id);
-            //    busco = false;
-            //}
 
             var result = MessageBox.Show("Desea Eliminar el detalle seleccionado?", "+Ventas",
                      MessageBoxButtons.YesNo, MessageBoxIcon.Question);

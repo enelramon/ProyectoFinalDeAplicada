@@ -58,6 +58,9 @@ namespace ProyectoFinal
                
                 MasVenta abrir = new MasVenta();
                 abrir.Show();
+                
+                
+
 
             }
             else
