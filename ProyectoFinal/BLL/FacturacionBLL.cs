@@ -9,9 +9,9 @@ using System.Text;
 
 namespace ProyectoFinal.BLL
 {
-   public class FacturacionBLL
+    public class FacturacionBLL
     {
-        private static  Usuario user = new Usuario();
+        private static Usuario user = new Usuario();
 
         public static bool Guardar(Factura bill)
         {
@@ -66,7 +66,7 @@ namespace ProyectoFinal.BLL
             try
             {
                 var eliminar = db.bill.Find(Id);
-                if (eliminar!=null)
+                if (eliminar != null)
                 {
                     db.Billes.RemoveRange(db.Billes.Where(x => x.FacturaId == eliminar.FacturaId));
                     db.Entry(eliminar).State = EntityState.Deleted;
@@ -76,7 +76,7 @@ namespace ProyectoFinal.BLL
                         paso = true;
                     }
                 }
-                
+
             }
             catch (Exception)
             {
@@ -95,11 +95,11 @@ namespace ProyectoFinal.BLL
             {
                 var billes = Buscar(bill.FacturaId);
                 db.Entry(bill).State = EntityState.Modified;
-                
+
                 ArreglarProducto(billes);
                 foreach (var item in bill.BillDetalle)
                 {
-                    if(item.Id==0)
+                    if (item.Id == 0)
                     {
                         GuardarDetalle(item);
                     }
@@ -112,14 +112,14 @@ namespace ProyectoFinal.BLL
                             paso = true;
                         }
                     }
-                  
-                    
+
+
                 }
                 if (paso1 == false)
                 {
                     if (db.SaveChanges() > 0)
                     {
-                        
+
                         paso = true;
                     }
                 }
@@ -145,11 +145,11 @@ namespace ProyectoFinal.BLL
             {
 
                 bill = db.bill.Find(id);
-                if(bill!=null)
+                if (bill != null)
                 {
                     bill.BillDetalle.Count();
                 }
-                
+
                 db.Dispose();
             }
             catch (Exception)
@@ -174,14 +174,14 @@ namespace ProyectoFinal.BLL
 
                 db.Dispose();
 
-               
+
             }
             catch (Exception)
             {
 
                 throw;
             }
-            
+
             return factura;
         }
 
@@ -201,7 +201,7 @@ namespace ProyectoFinal.BLL
             return monto;
         }
 
-        public static decimal Importe(decimal cantidadDefecto,decimal cantidad, decimal precio, int id, int ID)
+        public static decimal Importe(decimal cantidadDefecto, decimal cantidad, decimal precio, int id, int ID)
         {
             decimal importe = 0;
             if (ID == id)
@@ -213,7 +213,7 @@ namespace ProyectoFinal.BLL
             {
                 importe = cantidadDefecto * precio;
             }
-            
+
 
             return importe;
         }
@@ -221,10 +221,10 @@ namespace ProyectoFinal.BLL
         public static decimal Importedemas(decimal cantidad, decimal precio)
         {
             decimal importe = 0;
-           
-            
-                importe = cantidad * precio;
-            
+
+
+            importe = cantidad * precio;
+
 
 
             return importe;
@@ -233,17 +233,17 @@ namespace ProyectoFinal.BLL
         public static void DescontarProductos(List<FacturaDetalle> bill)
         {
             // Descontar cantidad a productos
-            
+
 
             foreach (var item in bill)
             {
                 var producto = BLL.ProductoBLL.Buscar(item.ProductoId);
-                
-                
-                    producto.Cantidad -= item.Cantidad;
 
-                    BLL.ProductoBLL.Modificar(producto);
-      
+
+                producto.Cantidad -= item.Cantidad;
+
+                BLL.ProductoBLL.Modificar(producto);
+
             }
 
         }
@@ -261,11 +261,23 @@ namespace ProyectoFinal.BLL
             }
         }
 
+        public static void ArreglarProductoList(List<FacturaDetalle> bill)
+        {
+            foreach (var item in bill)
+            {
+                var producto = BLL.ProductoBLL.Buscar(item.ProductoId);
+                producto.Cantidad += item.Cantidad;
+                BLL.ProductoBLL.Modificar(producto);
+            }
+
+
+        }
+
         public static List<FacturaDetalle> Editar(List<FacturaDetalle> list, FacturaDetalle factura)
         {
             foreach (var item in list)
             {
-                if(item.Id ==factura.Id)
+                if (item.Id == factura.Id)
                 {
                     item.Cantidad = factura.Cantidad;
                 }
@@ -275,19 +287,31 @@ namespace ProyectoFinal.BLL
             return list;
         }
 
-        public static decimal DescontarImporte(List<FacturaDetalle> list,int id)
+        public static decimal DescontarImporte(List<FacturaDetalle> list, int id)
         {
             decimal monto = 0;
+
             foreach (var item in list)
             {
-                if(item.Id == id)
+                if (item.Id == id)
                 {
                     item.Importe = item.Cantidad * item.Precio;
                     monto = item.Importe;
                 }
-                
+
             }
 
+
+
+            return monto;
+        }
+
+        public static decimal RecalcularImporte(List<FacturaDetalle> list, int row)
+        {
+            decimal monto = 0;
+            FacturaDetalle factura = list.ElementAt(row);
+            factura.Importe = factura.Cantidad * factura.Precio;
+            monto = factura.Importe;
             return monto;
         }
 
@@ -304,17 +328,18 @@ namespace ProyectoFinal.BLL
             int mayor = 0;
             foreach (var item in bill)
             {
-                if(mayor==0)
+                if (mayor == 0)
                 {
                     mayor = item.FacturaId;
-                }else
+                }
+                else
                 {
-                    if(mayor< item.FacturaId)
+                    if (mayor < item.FacturaId)
                     {
                         mayor = item.FacturaId;
                     }
                 }
-                
+
             }
 
             return mayor;
@@ -322,16 +347,16 @@ namespace ProyectoFinal.BLL
 
         public static void NombreLogin(string nombre, int id)
         {
-             user.Nombre = nombre;
+            user.Nombre = nombre;
             user.IdUsuario = id;
         }
-        
+
         public static Usuario returnUsuario()
         {
             return user;
         }
-       
-        public static decimal RetornarDevuelta( decimal efectivo, decimal monto)
+
+        public static decimal RetornarDevuelta(decimal efectivo, decimal monto)
         {
             decimal devuelta = CalcularDevuelta(efectivo, monto);
 

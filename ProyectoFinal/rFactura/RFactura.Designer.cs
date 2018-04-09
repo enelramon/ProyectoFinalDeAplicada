@@ -77,6 +77,7 @@
             this.IDcomboBox = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.NombreCLientetextBox = new System.Windows.Forms.TextBox();
+            this.EliminarDetalle = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.FacturadataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EfectivonumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CantidadnumericUpDown)).BeginInit();
@@ -99,7 +100,7 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(29, 566);
+            this.label2.Location = new System.Drawing.Point(19, 579);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(83, 13);
             this.label2.TabIndex = 1;
@@ -119,7 +120,7 @@
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(494, 566);
+            this.label4.Location = new System.Drawing.Point(484, 579);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(37, 13);
             this.label4.TabIndex = 3;
@@ -150,7 +151,7 @@
             // 
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(347, 566);
+            this.label8.Location = new System.Drawing.Point(337, 579);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(50, 13);
             this.label8.TabIndex = 7;
@@ -160,7 +161,7 @@
             // 
             this.label9.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(181, 566);
+            this.label9.Location = new System.Drawing.Point(171, 579);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(91, 13);
             this.label9.TabIndex = 8;
@@ -206,6 +207,7 @@
             // 
             // FacturadataGridView
             // 
+            this.FacturadataGridView.AllowUserToAddRows = false;
             this.FacturadataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.FacturadataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.FacturadataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -220,6 +222,7 @@
             this.FacturadataGridView.Name = "FacturadataGridView";
             this.FacturadataGridView.Size = new System.Drawing.Size(593, 210);
             this.FacturadataGridView.TabIndex = 17;
+            this.FacturadataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.FacturadataGridView_CellClick);
             // 
             // ProductoId
             // 
@@ -281,7 +284,7 @@
             // EfectivonumericUpDown
             // 
             this.EfectivonumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.EfectivonumericUpDown.Location = new System.Drawing.Point(175, 592);
+            this.EfectivonumericUpDown.Location = new System.Drawing.Point(165, 605);
             this.EfectivonumericUpDown.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -296,7 +299,7 @@
             // 
             this.DevueltatextBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.DevueltatextBox.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.DevueltatextBox.Location = new System.Drawing.Point(325, 592);
+            this.DevueltatextBox.Location = new System.Drawing.Point(315, 605);
             this.DevueltatextBox.Name = "DevueltatextBox";
             this.DevueltatextBox.ReadOnly = true;
             this.DevueltatextBox.Size = new System.Drawing.Size(87, 20);
@@ -306,7 +309,7 @@
             // 
             this.MontotextBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.MontotextBox.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.MontotextBox.Location = new System.Drawing.Point(475, 592);
+            this.MontotextBox.Location = new System.Drawing.Point(465, 605);
             this.MontotextBox.Name = "MontotextBox";
             this.MontotextBox.ReadOnly = true;
             this.MontotextBox.Size = new System.Drawing.Size(87, 20);
@@ -447,7 +450,7 @@
             this.Eliminarbutton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.Eliminarbutton.Image = global::ProyectoFinal.Properties.Resources.icons8_Delete_File_32;
             this.Eliminarbutton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Eliminarbutton.Location = new System.Drawing.Point(327, 634);
+            this.Eliminarbutton.Location = new System.Drawing.Point(325, 642);
             this.Eliminarbutton.Name = "Eliminarbutton";
             this.Eliminarbutton.Size = new System.Drawing.Size(82, 44);
             this.Eliminarbutton.TabIndex = 23;
@@ -461,7 +464,7 @@
             this.Guardarbutton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.Guardarbutton.Image = global::ProyectoFinal.Properties.Resources.icons8_Save_32;
             this.Guardarbutton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Guardarbutton.Location = new System.Drawing.Point(224, 634);
+            this.Guardarbutton.Location = new System.Drawing.Point(222, 642);
             this.Guardarbutton.Name = "Guardarbutton";
             this.Guardarbutton.Size = new System.Drawing.Size(82, 44);
             this.Guardarbutton.TabIndex = 22;
@@ -475,7 +478,7 @@
             this.NUevobutton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.NUevobutton.Image = global::ProyectoFinal.Properties.Resources.icons8_Add_New_32;
             this.NUevobutton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.NUevobutton.Location = new System.Drawing.Point(121, 634);
+            this.NUevobutton.Location = new System.Drawing.Point(119, 642);
             this.NUevobutton.Name = "NUevobutton";
             this.NUevobutton.Size = new System.Drawing.Size(82, 44);
             this.NUevobutton.TabIndex = 21;
@@ -488,7 +491,7 @@
             // 
             this.UsuariotextBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.UsuariotextBox.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.UsuariotextBox.Location = new System.Drawing.Point(25, 592);
+            this.UsuariotextBox.Location = new System.Drawing.Point(15, 605);
             this.UsuariotextBox.Name = "UsuariotextBox";
             this.UsuariotextBox.ReadOnly = true;
             this.UsuariotextBox.Size = new System.Drawing.Size(87, 20);
@@ -552,12 +555,24 @@
             this.NombreCLientetextBox.Size = new System.Drawing.Size(121, 20);
             this.NombreCLientetextBox.TabIndex = 61;
             // 
+            // EliminarDetalle
+            // 
+            this.EliminarDetalle.Enabled = false;
+            this.EliminarDetalle.Location = new System.Drawing.Point(12, 549);
+            this.EliminarDetalle.Name = "EliminarDetalle";
+            this.EliminarDetalle.Size = new System.Drawing.Size(90, 27);
+            this.EliminarDetalle.TabIndex = 62;
+            this.EliminarDetalle.Text = "Eliminar Detalle";
+            this.EliminarDetalle.UseVisualStyleBackColor = true;
+            this.EliminarDetalle.Click += new System.EventHandler(this.EliminarDetalle_Click);
+            // 
             // RFactura
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(610, 698);
+            this.Controls.Add(this.EliminarDetalle);
             this.Controls.Add(this.NombreCLientetextBox);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.IDcomboBox);
@@ -658,5 +673,6 @@
         private System.Windows.Forms.ComboBox CLienteIDcomboBox;
         private System.Windows.Forms.TextBox NombreCLientetextBox;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button EliminarDetalle;
     }
 }
