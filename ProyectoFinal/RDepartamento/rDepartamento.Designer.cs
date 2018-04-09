@@ -31,17 +31,14 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(rDepartamento));
             this.label1 = new System.Windows.Forms.Label();
-            this.IdnumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.NombretextBox = new System.Windows.Forms.TextBox();
             this.Nuevobutton = new System.Windows.Forms.Button();
             this.Guardarbutton = new System.Windows.Forms.Button();
             this.Eliminarbutton = new System.Windows.Forms.Button();
-            this.Consultabutton = new System.Windows.Forms.Button();
-            this.Buscarbutton = new System.Windows.Forms.Button();
             this.IderrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.DemaserrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.IdnumericUpDown)).BeginInit();
+            this.IDcomboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.IderrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DemaserrorProvider)).BeginInit();
             this.SuspendLayout();
@@ -54,13 +51,6 @@
             this.label1.Size = new System.Drawing.Size(16, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Id";
-            // 
-            // IdnumericUpDown
-            // 
-            this.IdnumericUpDown.Location = new System.Drawing.Point(63, 25);
-            this.IdnumericUpDown.Name = "IdnumericUpDown";
-            this.IdnumericUpDown.Size = new System.Drawing.Size(55, 20);
-            this.IdnumericUpDown.TabIndex = 1;
             // 
             // label2
             // 
@@ -82,7 +72,7 @@
             // 
             this.Nuevobutton.Image = global::ProyectoFinal.Properties.Resources.icons8_Add_New_32;
             this.Nuevobutton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Nuevobutton.Location = new System.Drawing.Point(4, 138);
+            this.Nuevobutton.Location = new System.Drawing.Point(39, 138);
             this.Nuevobutton.Name = "Nuevobutton";
             this.Nuevobutton.Size = new System.Drawing.Size(79, 37);
             this.Nuevobutton.TabIndex = 4;
@@ -95,7 +85,7 @@
             // 
             this.Guardarbutton.Image = global::ProyectoFinal.Properties.Resources.icons8_Save_32;
             this.Guardarbutton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Guardarbutton.Location = new System.Drawing.Point(88, 138);
+            this.Guardarbutton.Location = new System.Drawing.Point(123, 138);
             this.Guardarbutton.Name = "Guardarbutton";
             this.Guardarbutton.Size = new System.Drawing.Size(79, 37);
             this.Guardarbutton.TabIndex = 5;
@@ -108,7 +98,7 @@
             // 
             this.Eliminarbutton.Image = global::ProyectoFinal.Properties.Resources.icons8_Delete_File_32;
             this.Eliminarbutton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Eliminarbutton.Location = new System.Drawing.Point(172, 138);
+            this.Eliminarbutton.Location = new System.Drawing.Point(207, 138);
             this.Eliminarbutton.Name = "Eliminarbutton";
             this.Eliminarbutton.Size = new System.Drawing.Size(79, 37);
             this.Eliminarbutton.TabIndex = 6;
@@ -116,32 +106,6 @@
             this.Eliminarbutton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Eliminarbutton.UseVisualStyleBackColor = true;
             this.Eliminarbutton.Click += new System.EventHandler(this.Eliminarbutton_Click);
-            // 
-            // Consultabutton
-            // 
-            this.Consultabutton.Image = global::ProyectoFinal.Properties.Resources.icons8_Brief_32;
-            this.Consultabutton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Consultabutton.Location = new System.Drawing.Point(256, 138);
-            this.Consultabutton.Name = "Consultabutton";
-            this.Consultabutton.Size = new System.Drawing.Size(79, 37);
-            this.Consultabutton.TabIndex = 7;
-            this.Consultabutton.Text = "Consulta";
-            this.Consultabutton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Consultabutton.UseVisualStyleBackColor = true;
-            this.Consultabutton.Click += new System.EventHandler(this.Consultabutton_Click);
-            // 
-            // Buscarbutton
-            // 
-            this.Buscarbutton.Image = global::ProyectoFinal.Properties.Resources.icons8_Search_16;
-            this.Buscarbutton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Buscarbutton.Location = new System.Drawing.Point(124, 22);
-            this.Buscarbutton.Name = "Buscarbutton";
-            this.Buscarbutton.Size = new System.Drawing.Size(64, 23);
-            this.Buscarbutton.TabIndex = 8;
-            this.Buscarbutton.Text = "Buscar";
-            this.Buscarbutton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Buscarbutton.UseVisualStyleBackColor = true;
-            this.Buscarbutton.Click += new System.EventHandler(this.Buscarbutton_Click);
             // 
             // IderrorProvider
             // 
@@ -153,28 +117,33 @@
             this.DemaserrorProvider.ContainerControl = this;
             this.DemaserrorProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("DemaserrorProvider.Icon")));
             // 
+            // IDcomboBox
+            // 
+            this.IDcomboBox.FormattingEnabled = true;
+            this.IDcomboBox.Location = new System.Drawing.Point(63, 24);
+            this.IDcomboBox.Name = "IDcomboBox";
+            this.IDcomboBox.Size = new System.Drawing.Size(74, 21);
+            this.IDcomboBox.TabIndex = 9;
+            this.IDcomboBox.SelectedIndexChanged += new System.EventHandler(this.IDcomboBox_SelectedIndexChanged);
+            // 
             // rDepartamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(363, 187);
-            this.Controls.Add(this.Buscarbutton);
-            this.Controls.Add(this.Consultabutton);
+            this.Controls.Add(this.IDcomboBox);
             this.Controls.Add(this.Eliminarbutton);
             this.Controls.Add(this.Guardarbutton);
             this.Controls.Add(this.Nuevobutton);
             this.Controls.Add(this.NombretextBox);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.IdnumericUpDown);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "rDepartamento";
             this.Text = "Registro de Departamento";
-           
-            ((System.ComponentModel.ISupportInitialize)(this.IdnumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.IderrorProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DemaserrorProvider)).EndInit();
             this.ResumeLayout(false);
@@ -185,15 +154,13 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown IdnumericUpDown;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox NombretextBox;
         private System.Windows.Forms.Button Nuevobutton;
         private System.Windows.Forms.Button Guardarbutton;
         private System.Windows.Forms.Button Eliminarbutton;
-        private System.Windows.Forms.Button Consultabutton;
-        private System.Windows.Forms.Button Buscarbutton;
         private System.Windows.Forms.ErrorProvider IderrorProvider;
         private System.Windows.Forms.ErrorProvider DemaserrorProvider;
+        private System.Windows.Forms.ComboBox IDcomboBox;
     }
 }

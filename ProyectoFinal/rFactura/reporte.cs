@@ -11,21 +11,21 @@ using System.Windows.Forms;
 
 namespace ProyectoFinal.rFactura
 {
-    public partial class ReporteFacturas : Form
+    public partial class reporte : Form
     {
         List<Factura> datos = new List<Factura>();
-        public ReporteFacturas(List<Factura> list)
+        public reporte(List<Factura> list)
         {
-            InitializeComponent();
             datos = list;
+            InitializeComponent();
         }
 
-        private void ReporteDeFacturaViewer_Load(object sender, EventArgs e)
+        private void crystalReportViewer1_Load(object sender, EventArgs e)
         {
-            ReporteDeFacturas abrir = new ReporteDeFacturas();
+            Facturass abrir = new Facturass();
             abrir.SetDataSource(datos);
             ReporteDeFacturaViewer.ReportSource = abrir;
-           
+
             ReporteDeFacturaViewer.Refresh();
         }
     }

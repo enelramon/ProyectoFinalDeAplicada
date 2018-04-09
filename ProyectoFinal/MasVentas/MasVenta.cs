@@ -51,5 +51,35 @@ namespace ProyectoFinal.MasVentas
             RFactura Abrir = new RFactura();
             Abrir.Show();
         }
+
+        private void consultaDeUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CLogin abrir = new CLogin();
+            abrir.Show();
+        }
+
+        private void consultaDeFacturaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CFactura abrir = new CFactura();
+            abrir.Show();
+        }
+
+        private void consultaDeDepartamentoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CDepartamento abrir = new CDepartamento();
+            abrir.Show();
+        }
+
+        private void consultaDeClienteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            cClientes abrir = new cClientes();
+            abrir.Show();
+        }
+
+        private void consultaDeProductosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CProducto abrir = new CProducto();
+            abrir.Show();
+        }
     }
 }

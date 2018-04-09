@@ -29,29 +29,63 @@ namespace ProyectoFinal.RCliente
             {
                 //ID
                 case 0:
+                    LimpiarError();
+                    if (SetError(1))
+                    {
+                        MessageBox.Show("Introduce un numero");
+                        return;
+
+                    }
                     id = int.Parse(CriteriotextBox.Text);
                     filtrar = t => t.IdCliente == id;
                     break;
                 //Nombre
                 case 1:
-
+                    LimpiarError();
+                    if (SetError(2))
+                    {
+                        MessageBox.Show("Introduce un caracter");
+                        return;
+                    }
                     filtrar = t => t.Nombre.Contains(CriteriotextBox.Text);
                     break;
 
                 //Direccion
-                case 3:
-
+                case 2:
+                    LimpiarError();
+                    if (SetError(2))
+                    {
+                        MessageBox.Show("Introduce un caracter");
+                        return;
+                    }
                     filtrar = t => t.Direccion == CriteriotextBox.Text;
                     break;
                 //Cedula
-                case 4:
+                case 3:
+                    LimpiarError();
+                    if (SetError(1))
+                    {
+                        MessageBox.Show("Introduce un numero");
+                        return;
 
+                    }
                     filtrar = t => t.Cedula ==CriteriotextBox.Text;
                     break;
                 //Telefono
-                case 5:
+                case 4:
+                    LimpiarError();
+                    if (SetError(1))
+                    {
+                        MessageBox.Show("Introduce un numero");
+                        return;
 
+                    }
                     filtrar = t => t.Telefono == CriteriotextBox.Text;
+                    break;
+                //Listar Todo
+                case 5:
+                    
+                    filtrar = t => true;
                     break;
             }
 
@@ -59,10 +93,48 @@ namespace ProyectoFinal.RCliente
             ConsultadataGridView.DataSource = BLL.ClienteBLL.GetList(filtrar);
         }
 
+        private bool SetError(int error)
+        {
+            bool paso = false;
+            int ejem = 0;
+            if (error == 1 && int.TryParse(CriteriotextBox.Text, out ejem) == false)
+            {
+                TexterrorProvider.SetError(CriteriotextBox, "Debe de introducir un numero");
+                paso = true;
+            }
+            if (error == 2 && int.TryParse(CriteriotextBox.Text, out ejem) == true)
+            {
+                TexterrorProvider.SetError(CriteriotextBox, "Debe de introducir un caracter");
+                paso = true;
+            }
+
+            return paso;
+        }
+
+        private void LimpiarError()
+        {
+            TexterrorProvider.Clear();
+        }
+
         private void ReporteButton_Click(object sender, EventArgs e)
         {
             ReporteCliente abrir = new ReporteCliente(BLL.ClienteBLL.GetList(filtrar));
             abrir.Show();
+        }
+
+        private void TipocomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CriteriotextBox.Clear();
+            LimpiarError();
+            if (TipocomboBox.SelectedIndex == 5)
+            {
+                CriteriotextBox.Enabled = false;
+
+            }
+            else
+            {
+                CriteriotextBox.Enabled = true;
+            }
         }
     }
 }

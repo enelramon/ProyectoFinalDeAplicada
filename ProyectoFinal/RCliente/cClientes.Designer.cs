@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(cClientes));
             this.Consultabutton = new System.Windows.Forms.Button();
             this.TipocomboBox = new System.Windows.Forms.ComboBox();
@@ -36,7 +37,9 @@
             this.Tipo = new System.Windows.Forms.Label();
             this.ConsultadataGridView = new System.Windows.Forms.DataGridView();
             this.ReporteButton = new System.Windows.Forms.Button();
+            this.TexterrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ConsultadataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TexterrorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // Consultabutton
@@ -56,14 +59,16 @@
             this.TipocomboBox.FormattingEnabled = true;
             this.TipocomboBox.Items.AddRange(new object[] {
             "ID",
-            "Descripcion",
-            "Cantidad ",
-            "Precio",
-            "IdDepartamento"});
+            "Nombre",
+            "Direccion",
+            "Cedula",
+            "Telefono",
+            "Listar Todo"});
             this.TipocomboBox.Location = new System.Drawing.Point(5, 22);
             this.TipocomboBox.Name = "TipocomboBox";
             this.TipocomboBox.Size = new System.Drawing.Size(121, 21);
             this.TipocomboBox.TabIndex = 38;
+            this.TipocomboBox.SelectedIndexChanged += new System.EventHandler(this.TipocomboBox_SelectedIndexChanged);
             // 
             // CriteriotextBox
             // 
@@ -110,6 +115,11 @@
             this.ReporteButton.UseVisualStyleBackColor = true;
             this.ReporteButton.Click += new System.EventHandler(this.ReporteButton_Click);
             // 
+            // TexterrorProvider
+            // 
+            this.TexterrorProvider.ContainerControl = this;
+            this.TexterrorProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("TexterrorProvider.Icon")));
+            // 
             // cClientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -129,6 +139,7 @@
             this.Name = "cClientes";
             this.Text = "Consulta de Clientes";
             ((System.ComponentModel.ISupportInitialize)(this.ConsultadataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TexterrorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -143,5 +154,6 @@
         private System.Windows.Forms.Label Tipo;
         private System.Windows.Forms.DataGridView ConsultadataGridView;
         private System.Windows.Forms.Button ReporteButton;
+        private System.Windows.Forms.ErrorProvider TexterrorProvider;
     }
 }

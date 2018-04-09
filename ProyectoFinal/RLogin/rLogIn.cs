@@ -15,24 +15,24 @@ namespace ProyectoFinal.RLogin
         public rLogIn()
         {
             InitializeComponent();
+            LlenarComboBox();
         }
 
-        private void Consultabutton_Click(object sender, EventArgs e)
+        private void LlenarComboBox()
         {
-            CLogin abrir = new CLogin();
-            abrir.Show();
+            IDcomboBox.Items.Clear();
+            foreach (var item in BLL.UsuarioBLL.GetList(x => true))
+            {
+                IDcomboBox.Items.Add(item.IdUsuario);
+            }
+
+
         }
 
         private void Nuevobutton_Click(object sender, EventArgs e)
         {
-            IDnumericUpDown.Value = 0;
-            UsuariotextBox.Clear();
-            NombretextBox.Clear();
-            ContraseñatextBox.Clear();
-            ConfirmartextBox.Clear();
-            FechadateTimePicker.Value = DateTime.Now;
-            ComentariotextBox.Clear();
-            LimpiarError();
+
+            Clear();
         }
 
         private void LimpiarError()
@@ -49,10 +49,10 @@ namespace ProyectoFinal.RLogin
            
             int paso = 0;
             List<Usuario> user = new List<Usuario>();
-            if (error == 1 && IDnumericUpDown.Value == 0)
+            if (error == 1 && IDcomboBox.Text ==string.Empty)
             {
 
-                IDerrorProvider.SetError(IDnumericUpDown, "Llenar Campo!!");
+                IDerrorProvider.SetError(IDcomboBox, "Llenar Campo!!");
                 paso = 1;
                 return paso;
 
@@ -91,7 +91,7 @@ namespace ProyectoFinal.RLogin
                 paso = 1;
             }
 
-            if (error == 4 && BLL.UsuarioBLL.GetList(t => t.NombreUsuario == UsuariotextBox.Text).Exists(t => t.NombreUsuario == UsuariotextBox.Text)&& IDnumericUpDown.Value==0)
+            if (error == 4 && BLL.UsuarioBLL.GetList(t => t.NombreUsuario == UsuariotextBox.Text).Exists(t => t.NombreUsuario == UsuariotextBox.Text)&& IDcomboBox.Text == string.Empty)
             {
                 UsuarioerrorProvider.SetError(UsuariotextBox, "Debe de crear otro usuario!!");
                 paso = 1;
@@ -109,13 +109,13 @@ namespace ProyectoFinal.RLogin
                 MessageBox.Show("Campos Vacios!!");
                 return;
             }
-            if (SetError(4) == 1&& IDnumericUpDown.Value==0)
+            if (SetError(4) == 1&& IDcomboBox.Text==string.Empty)
             {
                 MessageBox.Show("Usuario existente!!");
                 return;
             }
             Usuario user = LlenaClase();
-            if (IDnumericUpDown.Value == 0)
+            if (IDcomboBox.Text == string.Empty)
             {
                 if (user == null)
                 {
@@ -125,6 +125,9 @@ namespace ProyectoFinal.RLogin
                 if (BLL.UsuarioBLL.Guardar(user))
                 {
                     MessageBox.Show("Guardado!!");
+                    IDcomboBox.DataSource = null;
+                    LlenarComboBox();
+                    Clear();
                 }
             }
             else
@@ -149,7 +152,15 @@ namespace ProyectoFinal.RLogin
         private Usuario LlenaClase()
         {
             Usuario user = new Usuario();
-            user.IdUsuario = Convert.ToInt32(IDnumericUpDown.Value);
+            if(IDcomboBox.Text==string.Empty)
+            {
+
+                user.IdUsuario = 0;
+            }
+            {
+                user.IdUsuario = Convert.ToInt32(IDcomboBox.Text);
+            }
+            
             user.NombreUsuario = UsuariotextBox.Text;
             user.Nombre = NombretextBox.Text;
             if (SetError(3) == 0)
@@ -174,38 +185,51 @@ namespace ProyectoFinal.RLogin
 
         private void Eliminarbutton_Click(object sender, EventArgs e)
         {
+            LimpiarError();
             if (SetError(1) == 1)
             {
                 MessageBox.Show("Campos Vacios!!");
                 return;
             }
-            if (BLL.UsuarioBLL.Eliminar(Convert.ToInt32(IDnumericUpDown.Value)))
-            {
-                MessageBox.Show("Eliminado");
+            
+                if (BLL.UsuarioBLL.Eliminar(Convert.ToInt32(IDcomboBox.Text)))
+                {
+                    MessageBox.Show("Eliminado");
+                    IDcomboBox.DataSource = null;
+                    LlenarComboBox();
+                    Clear();
             }
+                else
+                {
+                    MessageBox.Show("No se pudo elimianar");
+                }
+            
+            
+            
         }
 
-        private void BuscarButton_Click(object sender, EventArgs e)
+        private void IDcomboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (SetError(1) == 1)
-            {
-                MessageBox.Show("Campos Vacios!!");
-                return;
-            }
-            if (BLL.UsuarioBLL.Buscar(Convert.ToInt32(IDnumericUpDown.Value)) == null)
-            {
-                MessageBox.Show("Usuario no encontrado");
-                return;
-            }
-            var user = BLL.UsuarioBLL.Buscar(Convert.ToInt32(IDnumericUpDown.Value));
+            LimpiarError();
+            var user = BLL.UsuarioBLL.Buscar(Convert.ToInt32(IDcomboBox.Text));
             UsuariotextBox.Text = user.NombreUsuario;
             NombretextBox.Text = user.Nombre;
             ConfirmartextBox.Text = user.Clave;
             ContraseñatextBox.Text = user.Clave;
-            FechadateTimePicker.Value = user.Fecha;                
+            FechadateTimePicker.Value = user.Fecha;
             ComentariotextBox.Text = user.Comentario;
         }
 
-       
+        private void Clear()
+        {
+            IDcomboBox.Text = string.Empty;
+            UsuariotextBox.Clear();
+            NombretextBox.Clear();
+            ContraseñatextBox.Clear();
+            ConfirmartextBox.Clear();
+            FechadateTimePicker.Value = DateTime.Now;
+            ComentariotextBox.Clear();
+            LimpiarError();
+        }
     }
 }             

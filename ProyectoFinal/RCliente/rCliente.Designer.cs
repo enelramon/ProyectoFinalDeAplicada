@@ -35,19 +35,16 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.IdnumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.NombretextBox = new System.Windows.Forms.TextBox();
             this.DirecciontextBox = new System.Windows.Forms.TextBox();
             this.CedulamaskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.TelefonomaskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.IDerrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.DemaserrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.Consultarbutton = new System.Windows.Forms.Button();
             this.Eliminarbutton = new System.Windows.Forms.Button();
             this.Guardarbutton = new System.Windows.Forms.Button();
             this.Nuevobutton = new System.Windows.Forms.Button();
-            this.Buscarbutton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.IdnumericUpDown)).BeginInit();
+            this.IDcomboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.IDerrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DemaserrorProvider)).BeginInit();
             this.SuspendLayout();
@@ -97,13 +94,6 @@
             this.label5.TabIndex = 4;
             this.label5.Text = "Telefono";
             // 
-            // IdnumericUpDown
-            // 
-            this.IdnumericUpDown.Location = new System.Drawing.Point(73, 34);
-            this.IdnumericUpDown.Name = "IdnumericUpDown";
-            this.IdnumericUpDown.Size = new System.Drawing.Size(47, 20);
-            this.IdnumericUpDown.TabIndex = 5;
-            // 
             // NombretextBox
             // 
             this.NombretextBox.Location = new System.Drawing.Point(73, 61);
@@ -142,25 +132,13 @@
             // DemaserrorProvider
             // 
             this.DemaserrorProvider.ContainerControl = this;
-            // 
-            // Consultarbutton
-            // 
-            this.Consultarbutton.Image = global::ProyectoFinal.Properties.Resources.icons8_Brief_321;
-            this.Consultarbutton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Consultarbutton.Location = new System.Drawing.Point(264, 212);
-            this.Consultarbutton.Name = "Consultarbutton";
-            this.Consultarbutton.Size = new System.Drawing.Size(84, 34);
-            this.Consultarbutton.TabIndex = 14;
-            this.Consultarbutton.Text = "Consultar";
-            this.Consultarbutton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Consultarbutton.UseVisualStyleBackColor = true;
-            this.Consultarbutton.Click += new System.EventHandler(this.Consultarbutton_Click);
+            this.DemaserrorProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("DemaserrorProvider.Icon")));
             // 
             // Eliminarbutton
             // 
             this.Eliminarbutton.Image = global::ProyectoFinal.Properties.Resources.icons8_Delete_File_32;
             this.Eliminarbutton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Eliminarbutton.Location = new System.Drawing.Point(180, 212);
+            this.Eliminarbutton.Location = new System.Drawing.Point(204, 205);
             this.Eliminarbutton.Name = "Eliminarbutton";
             this.Eliminarbutton.Size = new System.Drawing.Size(84, 34);
             this.Eliminarbutton.TabIndex = 13;
@@ -173,7 +151,7 @@
             // 
             this.Guardarbutton.Image = global::ProyectoFinal.Properties.Resources.icons8_Save_32;
             this.Guardarbutton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Guardarbutton.Location = new System.Drawing.Point(96, 212);
+            this.Guardarbutton.Location = new System.Drawing.Point(120, 205);
             this.Guardarbutton.Name = "Guardarbutton";
             this.Guardarbutton.Size = new System.Drawing.Size(84, 34);
             this.Guardarbutton.TabIndex = 12;
@@ -186,7 +164,7 @@
             // 
             this.Nuevobutton.Image = global::ProyectoFinal.Properties.Resources.icons8_Add_New_32;
             this.Nuevobutton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Nuevobutton.Location = new System.Drawing.Point(12, 212);
+            this.Nuevobutton.Location = new System.Drawing.Point(36, 205);
             this.Nuevobutton.Name = "Nuevobutton";
             this.Nuevobutton.Size = new System.Drawing.Size(84, 34);
             this.Nuevobutton.TabIndex = 11;
@@ -195,18 +173,14 @@
             this.Nuevobutton.UseVisualStyleBackColor = true;
             this.Nuevobutton.Click += new System.EventHandler(this.Nuevobutton_Click);
             // 
-            // Buscarbutton
+            // IDcomboBox
             // 
-            this.Buscarbutton.Image = global::ProyectoFinal.Properties.Resources.icons8_Search_16;
-            this.Buscarbutton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Buscarbutton.Location = new System.Drawing.Point(126, 31);
-            this.Buscarbutton.Name = "Buscarbutton";
-            this.Buscarbutton.Size = new System.Drawing.Size(62, 23);
-            this.Buscarbutton.TabIndex = 10;
-            this.Buscarbutton.Text = "Buscar";
-            this.Buscarbutton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Buscarbutton.UseVisualStyleBackColor = true;
-            this.Buscarbutton.Click += new System.EventHandler(this.Buscarbutton_Click);
+            this.IDcomboBox.FormattingEnabled = true;
+            this.IDcomboBox.Location = new System.Drawing.Point(73, 34);
+            this.IDcomboBox.Name = "IDcomboBox";
+            this.IDcomboBox.Size = new System.Drawing.Size(121, 21);
+            this.IDcomboBox.TabIndex = 14;
+            this.IDcomboBox.SelectedIndexChanged += new System.EventHandler(this.IDcomboBox_SelectedIndexChanged);
             // 
             // rCliente
             // 
@@ -214,16 +188,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(360, 262);
-            this.Controls.Add(this.Consultarbutton);
+            this.Controls.Add(this.IDcomboBox);
             this.Controls.Add(this.Eliminarbutton);
             this.Controls.Add(this.Guardarbutton);
             this.Controls.Add(this.Nuevobutton);
-            this.Controls.Add(this.Buscarbutton);
             this.Controls.Add(this.TelefonomaskedTextBox);
             this.Controls.Add(this.CedulamaskedTextBox);
             this.Controls.Add(this.DirecciontextBox);
             this.Controls.Add(this.NombretextBox);
-            this.Controls.Add(this.IdnumericUpDown);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -234,7 +206,6 @@
             this.MinimizeBox = false;
             this.Name = "rCliente";
             this.Text = " Registro de Clientes";
-            ((System.ComponentModel.ISupportInitialize)(this.IdnumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.IDerrorProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DemaserrorProvider)).EndInit();
             this.ResumeLayout(false);
@@ -249,17 +220,15 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown IdnumericUpDown;
         private System.Windows.Forms.TextBox NombretextBox;
         private System.Windows.Forms.TextBox DirecciontextBox;
         private System.Windows.Forms.MaskedTextBox CedulamaskedTextBox;
         private System.Windows.Forms.MaskedTextBox TelefonomaskedTextBox;
-        private System.Windows.Forms.Button Buscarbutton;
         private System.Windows.Forms.Button Nuevobutton;
         private System.Windows.Forms.Button Guardarbutton;
         private System.Windows.Forms.Button Eliminarbutton;
-        private System.Windows.Forms.Button Consultarbutton;
         private System.Windows.Forms.ErrorProvider IDerrorProvider;
         private System.Windows.Forms.ErrorProvider DemaserrorProvider;
+        private System.Windows.Forms.ComboBox IDcomboBox;
     }
 }

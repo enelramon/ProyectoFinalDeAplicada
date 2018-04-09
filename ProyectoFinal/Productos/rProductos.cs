@@ -22,21 +22,12 @@ namespace ProyectoFinal.Productos
             AgregarAComboBox();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            IdnumericUpDown.Value = 0;
-            PrecionumericUpDown.Value = 0;
-            DepartamentocomboBox.Text =string.Empty ;
-            CantidadnumericUpDown.Value = 0;
-            DescripciontextBox.Clear();
-        }
-
         private bool SetError(int error)
         {
             bool paso = false;
-            if(error ==1&&IdnumericUpDown.Value==0)
+            if(error ==1&&IDcomboBox.Text==string.Empty)
             {
-                IderrorProvider.SetError(IdnumericUpDown, "Llenar Id");
+                IderrorProvider.SetError(IDcomboBox, "Llenar Id");
                 paso = true;
             }
             if(error==2&&PrecionumericUpDown.Value==0)
@@ -70,47 +61,17 @@ namespace ProyectoFinal.Productos
             DemasCamposerrorProvider.Clear();
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            LimpiarProvider();
-            if(SetError(2))
-            {
-                MessageBox.Show("LLenar Los Campos Vacios");
-                return;
-            }
-            Producto product = LlenaClase();
-            if(IdnumericUpDown.Value==0)
-            {
-                if(BLL.ProductoBLL.Guardar(product))
-                {
-                    MessageBox.Show("Guardado!!");
-                    return;
-                }
-                else
-                {
-                    MessageBox.Show("No se Guardo!!");
-                    return;
-                }
-            }
-            else
-            {
-                if(BLL.ProductoBLL.Modificar(LlenaClase()))
-                {
-                    MessageBox.Show("Modificado!!");
-                    return;
-                }
-                else
-                {
-                    MessageBox.Show("No se pudo modificar!!");
-                    return;
-                }
-            }
-        }
-
         private Producto LlenaClase()
         {
             Producto producto = new Producto();
-            producto.Idproducto = Convert.ToInt32(IdnumericUpDown.Value);
+            if(IDcomboBox.Text==string.Empty)
+            {
+                producto.Idproducto = 0;
+            }
+            else
+            {
+                producto.Idproducto = Convert.ToInt32(IDcomboBox.Text);
+            }
             producto.Descripcion = DescripciontextBox.Text;
             producto.Cantidad = Convert.ToInt32(CantidadnumericUpDown.Value);
             producto.Precio = PrecionumericUpDown.Value;
@@ -125,6 +86,7 @@ namespace ProyectoFinal.Productos
             Expression<Func<Departamento, bool>> filtrar = x => true;
             List<Departamento> tipo = new List<Departamento>();
             tipo = BLL.DepartamentoBLL.GetList(filtrar);
+            IDcomboBox.Items.Clear();
             DepartamentocomboBox.Items.Clear();
             foreach (var tel in tipo)
             {
@@ -132,29 +94,11 @@ namespace ProyectoFinal.Productos
         
             }
 
-        }
+            foreach (var item in BLL.ProductoBLL.GetList(x => true))
+            {
+                IDcomboBox.Items.Add(item.Idproducto);
+            }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            LimpiarProvider();
-            if(SetError(1))
-            {
-                MessageBox.Show("Llenar Id");
-                return;
-            }
-            var producto = BLL.ProductoBLL.Buscar(Convert.ToInt32(IdnumericUpDown.Value));
-            if(producto!=null)
-            {
-                PrecionumericUpDown.Value = producto.Precio;
-                CantidadnumericUpDown.Value = producto.Cantidad;
-                DepartamentocomboBox.Text = BLL.DepartamentoBLL.Buscar(producto.DepartamentoId).Nombre;
-                DescripciontextBox.Text = producto.Descripcion;
-            }
-            else
-            {
-                MessageBox.Show("Producto no Encontrado!!");
-                return;
-            }
         }
 
         private void Eliminarbutton_Click(object sender, EventArgs e)
@@ -166,9 +110,11 @@ namespace ProyectoFinal.Productos
                 return;
             }
 
-            if(BLL.ProductoBLL.Eliminar(Convert.ToInt32(IdnumericUpDown.Value)))
+            if(BLL.ProductoBLL.Eliminar(Convert.ToInt32(IDcomboBox.Text)))
             {
                 MessageBox.Show("Eliminado!!");
+                Clear();
+                AgregarAComboBox();
                 return;
             }
             else
@@ -178,14 +124,68 @@ namespace ProyectoFinal.Productos
             }
         }
 
-        private void COnsultabutton_Click(object sender, EventArgs e)
+        private void IDcomboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            CProducto abrir = new CProducto();
-            abrir.Show();
+            LimpiarProvider();
+            var producto = BLL.ProductoBLL.Buscar(Convert.ToInt32(IDcomboBox.Text));
+            PrecionumericUpDown.Value = producto.Precio;
+            CantidadnumericUpDown.Value = producto.Cantidad;
+            DepartamentocomboBox.Text = BLL.DepartamentoBLL.Buscar(producto.DepartamentoId).Nombre;
+            DescripciontextBox.Text = producto.Descripcion;
         }
 
-      
+        private void Nuevobutton_Click(object sender, EventArgs e)
+        {
+            Clear();
+        }
 
-       
+        private void Guardarbutton_Click(object sender, EventArgs e)
+        {
+            LimpiarProvider();
+            if (SetError(2))
+            {
+                MessageBox.Show("LLenar Los Campos Vacios");
+                return;
+            }
+            Producto product = LlenaClase();
+            if (IDcomboBox.Text == string.Empty)
+            {
+                if (BLL.ProductoBLL.Guardar(product))
+                {
+                    MessageBox.Show("Guardado!!");
+                    Clear();
+                    AgregarAComboBox();
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("No se Guardo!!");
+                    return;
+                }
+            }
+            else
+            {
+                if (BLL.ProductoBLL.Modificar(LlenaClase()))
+                {
+                    MessageBox.Show("Modificado!!");
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo modificar!!");
+                    return;
+                }
+            }
+        }
+
+        private void Clear()
+        {
+            LimpiarProvider();
+            IDcomboBox.Text = string.Empty;
+            PrecionumericUpDown.Value = 0;
+            DepartamentocomboBox.Text = string.Empty;
+            CantidadnumericUpDown.Value = 0;
+            DescripciontextBox.Clear();
+        }
     }
 }

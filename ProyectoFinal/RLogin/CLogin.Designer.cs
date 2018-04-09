@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CLogin));
             this.TipocomboBox = new System.Windows.Forms.ComboBox();
             this.CriteriotextBox = new System.Windows.Forms.TextBox();
@@ -40,7 +41,10 @@
             this.FInaldateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.AHoradateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.Reportebutton = new System.Windows.Forms.Button();
+            this.FechacheckBox = new System.Windows.Forms.CheckBox();
+            this.TexterrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ConsultadataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TexterrorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // TipocomboBox
@@ -49,7 +53,7 @@
             this.TipocomboBox.Items.AddRange(new object[] {
             "ID",
             "Nombre",
-            "fecha",
+            "Lista todo",
             "Usuario",
             "Clave",
             "Comentario"});
@@ -57,6 +61,7 @@
             this.TipocomboBox.Name = "TipocomboBox";
             this.TipocomboBox.Size = new System.Drawing.Size(121, 21);
             this.TipocomboBox.TabIndex = 22;
+            this.TipocomboBox.SelectedIndexChanged += new System.EventHandler(this.TipocomboBox_SelectedIndexChanged);
             // 
             // CriteriotextBox
             // 
@@ -147,12 +152,30 @@
             this.Reportebutton.UseVisualStyleBackColor = true;
             this.Reportebutton.Click += new System.EventHandler(this.Reportebutton_Click);
             // 
+            // FechacheckBox
+            // 
+            this.FechacheckBox.AutoSize = true;
+            this.FechacheckBox.Checked = true;
+            this.FechacheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.FechacheckBox.Location = new System.Drawing.Point(5, 55);
+            this.FechacheckBox.Name = "FechacheckBox";
+            this.FechacheckBox.Size = new System.Drawing.Size(107, 17);
+            this.FechacheckBox.TabIndex = 40;
+            this.FechacheckBox.Text = "Buscar por fecha";
+            this.FechacheckBox.UseVisualStyleBackColor = true;
+            this.FechacheckBox.CheckedChanged += new System.EventHandler(this.FechacheckBox_CheckedChanged);
+            // 
+            // TexterrorProvider
+            // 
+            this.TexterrorProvider.ContainerControl = this;
+            // 
             // CLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(729, 504);
+            this.Controls.Add(this.FechacheckBox);
             this.Controls.Add(this.Reportebutton);
             this.Controls.Add(this.FInaldateTimePicker2);
             this.Controls.Add(this.AHoradateTimePicker1);
@@ -170,6 +193,7 @@
             this.Name = "CLogin";
             this.Text = "Consulta de Usuarios";
             ((System.ComponentModel.ISupportInitialize)(this.ConsultadataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TexterrorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -187,5 +211,7 @@
         private System.Windows.Forms.DateTimePicker FInaldateTimePicker2;
         private System.Windows.Forms.DateTimePicker AHoradateTimePicker1;
         private System.Windows.Forms.Button Reportebutton;
+        private System.Windows.Forms.CheckBox FechacheckBox;
+        private System.Windows.Forms.ErrorProvider TexterrorProvider;
     }
 }

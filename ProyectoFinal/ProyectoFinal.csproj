@@ -125,16 +125,40 @@
     <Compile Include="Productos\rProductos.Designer.cs">
       <DependentUpon>rProductos.cs</DependentUpon>
     </Compile>
+    <Compile Include="RDepartamento\ReporteDepartamento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RDepartamento\ReporteDepartamento.Designer.cs">
+      <DependentUpon>ReporteDepartamento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Facturass.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Facturass.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\FacturaReporte.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FacturaReporte.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reportes\ReporteClientes.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ReporteClientes.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reportes\ReporteFactura.cs">
+    <Compile Include="Reportes\ReporteDeFacturas.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ReporteFactura.rpt</DependentUpon>
+      <DependentUpon>ReporteDeFacturas.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\ReporteDepartamentos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReporteDepartamentos.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\ReporteProductos.cs">
@@ -155,11 +179,23 @@
     <Compile Include="rFactura\CFactura.Designer.cs">
       <DependentUpon>CFactura.cs</DependentUpon>
     </Compile>
+    <Compile Include="rFactura\reporte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="rFactura\reporte.Designer.cs">
+      <DependentUpon>reporte.cs</DependentUpon>
+    </Compile>
     <Compile Include="rFactura\ReporteFacturas.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="rFactura\ReporteFacturas.Designer.cs">
       <DependentUpon>ReporteFacturas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="rFactura\ReporteFacturasCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="rFactura\ReporteFacturasCliente.Designer.cs">
+      <DependentUpon>ReporteFacturasCliente.cs</DependentUpon>
     </Compile>
     <Compile Include="rFactura\RFactura.cs">
       <SubType>Form</SubType>
@@ -230,13 +266,28 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RDepartamento\ReporteDepartamento.resx">
+      <DependentUpon>ReporteDepartamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Facturass.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Facturass.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\FacturaReporte.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>FacturaReporte.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\ReporteClientes.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ReporteClientes.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\ReporteFactura.rpt">
+    <EmbeddedResource Include="Reportes\ReporteDeFacturas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>ReporteFactura.cs</LastGenOutput>
+      <LastGenOutput>ReporteDeFacturas.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\ReporteDepartamentos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReporteDepartamentos.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\ReporteProductos.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -249,8 +300,14 @@
     <EmbeddedResource Include="rFactura\CFactura.resx">
       <DependentUpon>CFactura.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="rFactura\reporte.resx">
+      <DependentUpon>reporte.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="rFactura\ReporteFacturas.resx">
       <DependentUpon>ReporteFacturas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rFactura\ReporteFacturasCliente.resx">
+      <DependentUpon>ReporteFacturasCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="rFactura\RFactura.resx">
       <DependentUpon>RFactura.cs</DependentUpon>
@@ -319,6 +376,10 @@
     <None Include="Resources\icons8_Bill_16.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\icons8_Report_Card_16.png" />
+    <None Include="Resources\icons8_Report_Card32_32.png" />
+    <None Include="Resources\icons8_Print_32.png" />
+    <None Include="Resources\icons8_Custosmer_32.png" />
     <Content Include="Script\Script.sql" />
   </ItemGroup>
   <ItemGroup />

@@ -15,16 +15,23 @@ namespace ProyectoFinal.RCliente
         public rCliente()
         {
             InitializeComponent();
+            LlenarComboBox();
+        }
+
+        private void LlenarComboBox()
+        {
+            IDcomboBox.Items.Clear();
+            foreach (var item in BLL.ClienteBLL.GetList(x => true))
+            {
+                IDcomboBox.Items.Add(item.IdCliente);
+            }
+
+
         }
 
         private void Nuevobutton_Click(object sender, EventArgs e)
         {
-            IdnumericUpDown.Value = 0;
-            NombretextBox.Clear();
-            DirecciontextBox.Clear();
-            CedulamaskedTextBox.Clear();
-            TelefonomaskedTextBox.Clear();
-            LimpiarProvider();
+            Clear();
         }
 
         private void LimpiarProvider()
@@ -35,10 +42,11 @@ namespace ProyectoFinal.RCliente
 
         private bool SetError(int error)
         {
-            bool paso = false;
-            if(error ==1&&IdnumericUpDown.Value ==0)
+            bool paso = false ;
+
+            if(error ==1&& IDcomboBox.Text == string.Empty)
             {
-                IDerrorProvider.SetError(IdnumericUpDown, "Llenar Id");
+                IDerrorProvider.SetError(IDcomboBox, "Llenar Id");
                 paso = true;
             }
             if(error ==2&&NombretextBox.Text ==string.Empty)
@@ -51,13 +59,15 @@ namespace ProyectoFinal.RCliente
                 DemaserrorProvider.SetError(DirecciontextBox, "Llenar Direccion");
                 paso = true;
             }
-            if(error==2&&CedulamaskedTextBox.TextLength < 12)
+            if(error==2&& CedulamaskedTextBox.MaskFull==false)
             {
+                
                 DemaserrorProvider.SetError(CedulamaskedTextBox, "Llenar Cedula");
                 paso = true;
             }
-            if(error == 2 &&TelefonomaskedTextBox.TextLength<13)
+            if (error == 2&&TelefonomaskedTextBox.MaskFull==false)
             {
+
                 DemaserrorProvider.SetError(TelefonomaskedTextBox, "Llenar Telefono");
                 paso = true;
             }
@@ -74,11 +84,14 @@ namespace ProyectoFinal.RCliente
             }
             Cliente customer = LlenaClase();
 
-            if(IdnumericUpDown.Value==0)
+            if(IDcomboBox.Text ==string.Empty)
             {
                 if(BLL.ClienteBLL.Guardar(customer))
                 {
                     MessageBox.Show("Guardado!!");
+                    IDcomboBox.DataSource = null;
+                    LlenarComboBox();
+                    Clear();
                 }
                 else
                 {
@@ -101,7 +114,15 @@ namespace ProyectoFinal.RCliente
         private  Cliente LlenaClase()
         {
             Cliente customer = new Cliente();
-            customer.IdCliente = Convert.ToInt32(IdnumericUpDown.Value);
+            if (IDcomboBox.Text == string.Empty)
+            {
+                customer.IdCliente = 0;
+            }
+            else
+            {
+                customer.IdCliente = Convert.ToInt32(IDcomboBox.Text);
+
+            }    
             customer.Nombre = NombretextBox.Text;
             customer.Direccion = DirecciontextBox.Text;
             customer.Cedula = CedulamaskedTextBox.Text;
@@ -119,9 +140,12 @@ namespace ProyectoFinal.RCliente
                 return;
             }
 
-            if(BLL.ClienteBLL.Eliminar(Convert.ToInt32(IdnumericUpDown.Value)))
+            if(BLL.ClienteBLL.Eliminar(Convert.ToInt32(IDcomboBox.Text)))
             {
                 MessageBox.Show("Eliminado!!");
+                IDcomboBox.DataSource = null;
+                LlenarComboBox();
+                Clear();
             }
             else
             {
@@ -129,33 +153,24 @@ namespace ProyectoFinal.RCliente
             }
         }
 
-        private void Buscarbutton_Click(object sender, EventArgs e)
+        private void IDcomboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             LimpiarProvider();
-            if(SetError(1))
-            {
-                MessageBox.Show("Llenar Campo Id");
-                return;
-            }
-            var customer = BLL.ClienteBLL.Buscar(Convert.ToInt32(IdnumericUpDown.Value));
-            if(customer!=null)
-            {
-                NombretextBox.Text = customer.Nombre;
-                DirecciontextBox.Text = customer.Direccion;
-                CedulamaskedTextBox.Text = customer.Cedula;
-                TelefonomaskedTextBox.Text = customer.Telefono;
-
-            }
-            else
-            {
-                MessageBox.Show("No se encontro nada!!");
-            }
+            var customer = BLL.ClienteBLL.Buscar(Convert.ToInt32(IDcomboBox.Text));
+            NombretextBox.Text = customer.Nombre;
+            DirecciontextBox.Text = customer.Direccion;
+            CedulamaskedTextBox.Text = customer.Cedula;
+            TelefonomaskedTextBox.Text = customer.Telefono;
         }
 
-        private void Consultarbutton_Click(object sender, EventArgs e)
+        private void Clear()
         {
-            cClientes abrir = new cClientes();
-            abrir.Show();
+            IDcomboBox.Text = string.Empty;
+            NombretextBox.Clear();
+            DirecciontextBox.Clear();
+            CedulamaskedTextBox.Clear();
+            TelefonomaskedTextBox.Clear();
+            LimpiarProvider();
         }
     }
 }

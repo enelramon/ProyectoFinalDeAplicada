@@ -1,6 +1,6 @@
 ﻿namespace ProyectoFinal.rFactura
 {
-    partial class ReporteFacturas
+    partial class reporte
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReporteFacturas));
             this.ReporteDeFacturaViewer = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.SuspendLayout();
             // 
@@ -40,19 +39,18 @@
             this.ReporteDeFacturaViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ReporteDeFacturaViewer.Location = new System.Drawing.Point(0, 0);
             this.ReporteDeFacturaViewer.Name = "ReporteDeFacturaViewer";
-            this.ReporteDeFacturaViewer.Size = new System.Drawing.Size(813, 458);
+            this.ReporteDeFacturaViewer.Size = new System.Drawing.Size(800, 450);
             this.ReporteDeFacturaViewer.TabIndex = 0;
-            this.ReporteDeFacturaViewer.Load += new System.EventHandler(this.ReporteDeFacturaViewer_Load);
+            this.ReporteDeFacturaViewer.Load += new System.EventHandler(this.crystalReportViewer1_Load);
             // 
-            // ReporteFactura
+            // reporte
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(813, 458);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.ReporteDeFacturaViewer);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "ReporteFactura";
-            this.Text = "Reporte de Factura";
+            this.Name = "reporte";
+            this.Text = "reporte";
             this.ResumeLayout(false);
 
         }

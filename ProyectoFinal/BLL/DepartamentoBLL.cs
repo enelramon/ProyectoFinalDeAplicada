@@ -21,6 +21,7 @@ namespace ProyectoFinal.BLL
                 {
                     db.SaveChanges();
                     paso = true;
+                    db.Dispose();
                 }
 
 
@@ -40,11 +41,16 @@ namespace ProyectoFinal.BLL
             try
             {
                 var eliminar = db.Depart.Find(Id);
-                db.Entry(eliminar).State = EntityState.Deleted;
-                if (db.SaveChanges() > 0)
+                if(eliminar!=null)
                 {
-                    paso = true;
+                    db.Entry(eliminar).State = EntityState.Deleted;
+                    if (db.SaveChanges() > 0)
+                    {
+                        paso = true;
+                        db.Dispose();
+                    }
                 }
+                
             }
             catch (Exception)
             {
@@ -64,6 +70,7 @@ namespace ProyectoFinal.BLL
                 if (db.SaveChanges() > 0)
                 {
                     paso = true;
+                    db.Dispose();
                 }
             }
             catch (Exception)
@@ -82,6 +89,7 @@ namespace ProyectoFinal.BLL
             try
             {
                 departamento = db.Depart.Find(id);
+                db.Dispose();
             }
             catch (Exception)
             {
@@ -98,6 +106,7 @@ namespace ProyectoFinal.BLL
             try
             {
                 usuario = db.Depart.Where(user).ToList();
+                db.Dispose();
             }
             catch (Exception)
             {

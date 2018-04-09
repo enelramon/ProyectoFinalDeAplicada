@@ -13,17 +13,39 @@ namespace ProyectoFinal.rFactura
     public partial class RFactura : Form
     {
         decimal Monto = 0;
+        bool paso = true;
         Factura billes = new Factura();
+
         public RFactura()
         {
             InitializeComponent();
             LlenarComboBox();
+            UsuariotextBox.Text = BLL.FacturacionBLL.returnUsuario().Nombre;
         }
 
         private void LlenarComboBox()
         {
             FormaDePagocomboBox.Items.Add("Credito");
             FormaDePagocomboBox.Items.Add("Contado");
+            DevueltatextBox.Text = "0";
+            IDcomboBox.Items.Clear();
+            CLienteIDcomboBox.Items.Clear();
+            ProductoIdcomboBox.Items.Clear();
+
+            foreach (var item in BLL.ProductoBLL.GetList(x=>true))
+            {
+                ProductoIdcomboBox.Items.Add(item.Idproducto);
+            }
+            foreach (var item in BLL.FacturacionBLL.GetList(x => true))
+            {
+                IDcomboBox.Items.Add(item.FacturaId);
+            }
+            foreach (var item in BLL.ClienteBLL.GetList(x => true))
+            {
+                CLienteIDcomboBox.Items.Add(item.IdCliente);
+            }
+
+
         }
 
         private void LimpiarProvider()
@@ -36,19 +58,15 @@ namespace ProyectoFinal.rFactura
         private bool SetError(int error)
         {
             bool paso = false;
-            if(error==1&&IDnumericUpDown.Value ==0)
+            if(error==1&&IDcomboBox.Text==string.Empty)
             {
-                IDerrorProvider.SetError(IDnumericUpDown, "Llenar Id");
+                IDerrorProvider.SetError(IDcomboBox, "Llenar Id");
                 paso = true;
             }
-            if(error == 2 &&UsuarioIdnumericUpDown.Value ==0)
+           
+            if (error == 2 && CLienteIDcomboBox.Text==string.Empty)
             {
-                DemaserrorProvider.SetError(IDnumericUpDown, "Llenar Usuario Id");
-                paso = true;
-            }
-            if (error == 2 && ClienteIdnumericUpDown.Value == 0)
-            {
-                DemaserrorProvider.SetError(ClienteIdnumericUpDown, "Llenar Cliente Id");
+                DemaserrorProvider.SetError(CLienteIDcomboBox, "Llenar Cliente Id");
                 paso = true;
             }
             if (error == 2 && FormaDePagocomboBox.Text==string.Empty)
@@ -66,22 +84,36 @@ namespace ProyectoFinal.rFactura
                 DemaserrorProvider.SetError(DescripciponFacturatextBox, "Llenar descripcion");
                 paso = true;
             }
-            if (error == 2 && EfectivonumericUpDown.Value == 0)
+            if (error == 2 && EfectivonumericUpDown.Value == 0&& FormaDePagocomboBox.SelectedIndex != 0)
             {
                 DemaserrorProvider.SetError(EfectivonumericUpDown, "Llenar Efectivo de caja");
                 paso = true;
             }
-            if(error ==3&&ProductoIDnumericUpDown.Value==0)
+            if(error ==3&& ProductoIdcomboBox.Text==string.Empty)
             {
-                ProductoerrorProvider.SetError(ProductoIDnumericUpDown, " Llenar id producto");
+                ProductoerrorProvider.SetError(ProductoIdcomboBox, " Llenar id producto");
                 paso = true;
             }
-            if (error == 4 && DetallenumericUpDown.Value == 0)
+            if (error == 4 && DetallecomboBox.Text == string.Empty)
             {
-                ProductoerrorProvider.SetError(DetallenumericUpDown, " Llenar id producto");
+                ProductoerrorProvider.SetError(DetallecomboBox, " Llenar id producto");
                 paso = true;
             }
-
+            if(error ==5 &&Convert.ToDecimal(DevueltatextBox.Text)<0)
+            {
+                DemaserrorProvider.SetError(DevueltatextBox, "Posible perdida, Arreglar efectivo recibido");
+                paso = true;
+            }
+            if (error == 6 &&  ProductoIdcomboBox.Text ==string.Empty )
+            {
+                DemaserrorProvider.SetError(ProductoIdcomboBox, "Debe de buscar antes de agregar!");
+                paso = true;
+            }
+            if(error ==7 && CantidadnumericUpDown.Value == 0)
+            {
+                DemaserrorProvider.SetError(CantidadnumericUpDown, "Debe de agregar una cantidad andes de agregar!");
+                paso = true;
+            }
 
 
             return paso;
@@ -89,25 +121,28 @@ namespace ProyectoFinal.rFactura
 
         private void NUevobutton_Click(object sender, EventArgs e)
         {
+            Clean();
             
-            IDnumericUpDown.Value = 0;
-            UsuarioIdnumericUpDown.Value = 0;
-            ClienteIdnumericUpDown.Value = 0;
+        }
+
+        private void Clean()
+        {
+            
+            IDcomboBox.Text = string.Empty;
+            CLienteIDcomboBox.Text = string.Empty;
             FormaDePagocomboBox.Text = string.Empty;
             DescripciponFacturatextBox.Clear();
-            ProductoIDnumericUpDown.Value = 0;
-            CantidadnumericUpDown.Value = 0;
-            DescripcionProductotextBox.Clear();
-            PreciotextBox.Clear();
-            ImportetextBox.Clear();
-            DetallenumericUpDown.Value = 0;
+            LimpiarProducto();
+            NombreCLientetextBox.Text = string.Empty;
             EfectivonumericUpDown.Value = 0;
-            DevueltatextBox.Clear();
-            MontotextBox.Clear();
+            DevueltatextBox.Text = "0";
+            MontotextBox.Text = "0";
             LimpiarProvider();
             FacturadataGridView.DataSource = null;
             billes.BillDetalle = new List<FacturaDetalle>();
             Monto = 0;
+            DetallecomboBox.Text = string.Empty;
+            DetallecomboBox.Enabled = false;
         }
 
         private void Guardarbutton_Click(object sender, EventArgs e)
@@ -118,20 +153,37 @@ namespace ProyectoFinal.rFactura
                 MessageBox.Show("Llenar Campos vacios");
                 return;
             }
+            if(SetError(5)==true&& FormaDePagocomboBox.SelectedIndex != 0)
+            {
+                MessageBox.Show("Arreglar devolucion");
+                return;
+            }
 
             Factura bill = LlenaClase();
-            if(IDnumericUpDown.Value==0)
+            if(IDcomboBox.Text == string.Empty)
             {
                 if(BLL.FacturacionBLL.Guardar(bill))
                 {
                     MessageBox.Show("Guardado!!");
-                }
+                    LlenarComboBox();
+                    var result = MessageBox.Show("Desea Imprimir un recibo?", "+Ventas",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (result == DialogResult.Yes)
+                    {  
+                        //La variable mayor me devuelve la ultima factura realizada para poder imprimirla
+                        int mayor = BLL.FacturacionBLL.Mayor(BLL.FacturacionBLL.GetList(y => true));
+                        ReporteFacturasCliente abrir = new  ReporteFacturasCliente(BLL.FacturacionBLL.GetList(x => x.FacturaId ==mayor));
+                        abrir.Show();
+                    }
+                    Clean();
+                }      
                 else
                 {
                     MessageBox.Show("No se pudo Guardar!!");
                 }
 
-                BLL.FacturacionBLL.DescontarProductos(billes.BillDetalle, Convert.ToInt32(CantidadnumericUpDown.Value));
+                BLL.FacturacionBLL.DescontarProductos(billes.BillDetalle);
                
             }
             else
@@ -139,6 +191,7 @@ namespace ProyectoFinal.rFactura
                 if(BLL.FacturacionBLL.Modificar(LlenaClase()))
                 {
                     MessageBox.Show("Modificado!!");
+                    Clean();
                 }
                 else
                 {
@@ -151,66 +204,33 @@ namespace ProyectoFinal.rFactura
         private Factura LlenaClase()
         {
             Factura bill = new Factura();
-
-            bill.FacturaId = Convert.ToInt32(IDnumericUpDown.Value);
-            bill.ClienteId = Convert.ToInt32(ClienteIdnumericUpDown.Value);
-            bill.UsuarioId = Convert.ToInt32(UsuarioIdnumericUpDown.Value);
+            if(IDcomboBox.Text==string.Empty)
+            {
+                bill.FacturaId = 0;
+            }
+            else
+            {
+                bill.FacturaId = Convert.ToInt32(IDcomboBox.Text);
+            }
+           
+            bill.ClienteId = Convert.ToInt32(CLienteIDcomboBox.Text);
+            bill.UsuarioId = BLL.FacturacionBLL.returnUsuario().IdUsuario;
             bill.Fecha = FechadateTimePicker.Value;
             bill.FormaDePago = FormaDePagocomboBox.Text;
             bill.Descripcion = DescripciponFacturatextBox.Text;
             bill.EfectivoRecibido = EfectivonumericUpDown.Value;
             bill.Monto = Convert.ToDecimal(MontotextBox.Text);
+
             bill.Devuelta = Convert.ToDecimal(DevueltatextBox.Text);
+
             bill.BillDetalle = billes.BillDetalle;
 
             return bill;
-
-
-        }
-
-        private void Buscarbutton_Click(object sender, EventArgs e)
-        {
-
-            LimpiarProvider();
-            int idfactura = Convert.ToInt32(IDnumericUpDown.Value);
-            if(SetError(1))
-            {
-                MessageBox.Show("Llenar Id");
-                return;
-            }
-
-            var bill = BLL.FacturacionBLL.Buscar(Convert.ToInt32(IDnumericUpDown.Value));
-            if(bill!=null)
-            {
-                ClienteIdnumericUpDown.Value = bill.ClienteId;
-                UsuarioIdnumericUpDown.Value = bill.UsuarioId;
-                FormaDePagocomboBox.Text = bill.FormaDePago;
-                DescripciponFacturatextBox.Text = bill.Descripcion;
-                DevueltatextBox.Text = bill.Devuelta.ToString();
-                MontotextBox.Text = bill.Monto.ToString();
-                Monto = bill.Monto;
-                FechadateTimePicker.Value = bill.Fecha;
-                EfectivonumericUpDown.Value = bill.EfectivoRecibido;
-                billes.BillDetalle = BLL.FacturaDetalleBLL.GetList(x => x.FacturaId == idfactura);
-                foreach (var item in billes.BillDetalle)
-                {
-                    item.Importe = BLL.FacturacionBLL.Importe(item.Cantidad, item.Precio);
-                }
-                FacturadataGridView.DataSource = billes.BillDetalle;
-                billes.BillDetalle = new List<FacturaDetalle>();
-                BuscarDetalllebutton.Enabled = true;
-                DetallenumericUpDown.Enabled = true;
-            }
-            else
-            {
-                MessageBox.Show("Factura no encontrada");
-            }
-            
         }
 
         private void Eliminarbutton_Click(object sender, EventArgs e)
         {
-            var persona = BLL.FacturacionBLL.Buscar(Convert.ToInt32(IDnumericUpDown.Value));
+            //var persona = BLL.FacturacionBLL.Buscar(Convert.ToInt32(IDnumericUpDown.Value));
        
             LimpiarProvider();
             if (SetError(1))
@@ -218,9 +238,15 @@ namespace ProyectoFinal.rFactura
                 MessageBox.Show("Llenar campos Vacios");
                 return;
             }
-            if ( BLL.FacturacionBLL.Eliminar(Convert.ToInt32(IDnumericUpDown.Value)))
+
+            BLL.FacturacionBLL.ArreglarProducto(BLL.FacturacionBLL.Buscar(Convert.ToInt32(IDcomboBox.Text)));
+
+            if ( BLL.FacturacionBLL.Eliminar(Convert.ToInt32(IDcomboBox.Text)))
             {
                 MessageBox.Show("Eliminado");
+                IDcomboBox.DataSource = null;
+                LlenarComboBox();
+                Clean();
             }
             else
             {
@@ -230,34 +256,18 @@ namespace ProyectoFinal.rFactura
 
         }
 
-        private void BuscarArticulobutton_Click(object sender, EventArgs e)
-        {
-            CantidadnumericUpDown.Value = 0;
-            ImportetextBox.Clear();
-            LimpiarProvider();
-            if (SetError(3))
-            {
-                MessageBox.Show("Llenar Id");
-                return;
-            }
-
-            var producto = BLL.ProductoBLL.Buscar(Convert.ToInt32(ProductoIDnumericUpDown.Value));
-            if (producto != null)
-            {
-                DescripcionProductotextBox.Text = producto.Descripcion;
-                PreciotextBox.Text = producto.Precio.ToString();
-
-            }
-            else
-            {
-                MessageBox.Show("Factura no encontrada");
-            }
-        }
-
         private void CantidadnumericUpDown_ValueChanged(object sender, EventArgs e)
         {
+            LimpiarProvider();
+         if (SetError(6))
+         {
+             MessageBox.Show("Debe Buscar Antes de poner una cantidad");
+             CantidadnumericUpDown.Value = 0;
+             return;
+          }
             
-            ImportetextBox.Text = BLL.FacturacionBLL.Importe(CantidadnumericUpDown.Value, Convert.ToDecimal(PreciotextBox.Text)).ToString();
+            
+            ImportetextBox.Text = BLL.FacturacionBLL.Importedemas(CantidadnumericUpDown.Value, Convert.ToDecimal(PreciotextBox.Text)).ToString();
         }
 
         private void EfectivonumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -267,80 +277,191 @@ namespace ProyectoFinal.rFactura
 
         private void AsignarDevuelta()
         {
-            decimal devuelta = BLL.FacturacionBLL.CalcularDevuelta(EfectivonumericUpDown.Value, Convert.ToDecimal(MontotextBox.Text));
-            DevueltatextBox.Text = devuelta.ToString();
+            DevueltatextBox.Text =  BLL.FacturacionBLL.RetornarDevuelta(EfectivonumericUpDown.Value, Convert.ToDecimal(MontotextBox.Text)).ToString();
         }
 
         private void Agregarbutton_Click(object sender, EventArgs e)
         {
-            int idfactura = Convert.ToInt32(IDnumericUpDown.Value);
-            
-
-            if (BLL.ProductoBLL.Buscar(Convert.ToInt32(ProductoIDnumericUpDown.Value)).Cantidad - Convert.ToInt32(CantidadnumericUpDown.Value) < 0)
+            LimpiarProvider();
+            if(SetError(6)||SetError(7))
             {
-                MessageBox.Show("Cantidad insuficiente del producto solicitado");
-                MessageBox.Show("Disponibles "+BLL.ProductoBLL.Buscar(Convert.ToInt32(ProductoIDnumericUpDown.Value)).Cantidad.ToString());
+                MessageBox.Show("Debe de completar los campos marcados");
                 return;
             }
-            if(IDnumericUpDown.Value ==0)
+            
+            
+
+            if (BLL.ProductoBLL.Buscar(Convert.ToInt32(ProductoIdcomboBox.Text)).Cantidad - Convert.ToInt32(CantidadnumericUpDown.Value) < 0)
             {
-                billes.BillDetalle.Add(new FacturaDetalle(0, billes.FacturaId, Convert.ToInt32(ProductoIDnumericUpDown.Value), Convert.ToInt32(CantidadnumericUpDown.Value), Convert.ToDecimal(PreciotextBox.Text), DescripcionProductotextBox.Text, Convert.ToDecimal(ImportetextBox.Text)));
+                MessageBox.Show("Cantidad insuficiente del producto solicitado");
+                MessageBox.Show("Disponibles "+BLL.ProductoBLL.Buscar(Convert.ToInt32(ProductoIdcomboBox.Text)).Cantidad.ToString());
+                return;
+            }
+            if(IDcomboBox.Text==string.Empty)
+            {
+                billes.BillDetalle.Add(new FacturaDetalle(0, billes.FacturaId, Convert.ToInt32(ProductoIdcomboBox.Text), Convert.ToInt32(CantidadnumericUpDown.Value), Convert.ToDecimal(PreciotextBox.Text), DescripcionProductotextBox.Text, Convert.ToDecimal(ImportetextBox.Text)));
                 
             }
             else
             {
-          
-                 billes.BillDetalle = BLL.FacturaDetalleBLL.GetList(x => x.FacturaId == idfactura);
-                 Monto -= BLL.FacturacionBLL.DescontarImporte(billes.BillDetalle, Convert.ToInt32(DetallenumericUpDown.Value));
-                foreach (var item in billes.BillDetalle)
+                int idfactura = Convert.ToInt32(IDcomboBox.Text);
+                if (billes.BillDetalle.Count==0)
+                 {
+                    billes.BillDetalle = BLL.FacturaDetalleBLL.GetList(x => x.FacturaId == idfactura);
+                 }
+                if (DetallecomboBox.Text == string.Empty)
                 {
-                    item.Importe = BLL.FacturacionBLL.Importe(item.Cantidad, item.Precio);
+                    var Idproducto = Convert.ToInt32(ProductoIdcomboBox.Text);
+                    if (billes.BillDetalle.Exists(x => x.ProductoId == Idproducto))
+                    {
+                        foreach (var item in billes.BillDetalle)
+                        {
+                            if(item.ProductoId==Idproducto)
+                            {
+                                item.Cantidad += Convert.ToInt32(CantidadnumericUpDown.Value);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        billes.BillDetalle.Add(new FacturaDetalle(0, Convert.ToInt32(IDcomboBox.Text), Convert.ToInt32(ProductoIdcomboBox.Text), Convert.ToInt32(CantidadnumericUpDown.Value), Convert.ToDecimal(PreciotextBox.Text), DescripcionProductotextBox.Text, Convert.ToDecimal(ImportetextBox.Text)));
+                    }
                 }
-                billes.BillDetalle = BLL.FacturacionBLL.Editar(billes.BillDetalle, new FacturaDetalle(Convert.ToInt32(DetallenumericUpDown.Value), Convert.ToInt32(IDnumericUpDown.Value), Convert.ToInt32(ProductoIDnumericUpDown.Value), Convert.ToInt32(CantidadnumericUpDown.Value), Convert.ToDecimal(PreciotextBox.Text), DescripcionProductotextBox.Text, Convert.ToDecimal(ImportetextBox.Text)));
-               
+                else
+                {
+                    Monto -= BLL.FacturacionBLL.DescontarImporte(billes.BillDetalle, Convert.ToInt32(DetallecomboBox.Text));
+
+                    foreach (var item in billes.BillDetalle)
+                    {
+                        item.Importe = BLL.FacturacionBLL.Importe(item.Cantidad, CantidadnumericUpDown.Value, item.Precio, Convert.ToInt32(ProductoIdcomboBox.Text), item.ProductoId);
+                    }
+                    billes.BillDetalle = BLL.FacturacionBLL.Editar(billes.BillDetalle, new FacturaDetalle(Convert.ToInt32(DetallecomboBox.Text), Convert.ToInt32(IDcomboBox.Text), Convert.ToInt32(ProductoIdcomboBox.Text), Convert.ToInt32(CantidadnumericUpDown.Value), Convert.ToDecimal(PreciotextBox.Text), DescripcionProductotextBox.Text, Convert.ToDecimal(ImportetextBox.Text)));
+                }
                 
             }
 
             Monto += BLL.FacturacionBLL.CalcularMonto(Convert.ToDecimal(ImportetextBox.Text));
             MontotextBox.Text = Monto.ToString();
-            AsignarDevuelta();
+            if(paso)
+            {
+                AsignarDevuelta();
+            }
             FacturadataGridView.DataSource = null;
             FacturadataGridView.DataSource = billes.BillDetalle;
+            LimpiarProducto();
+            LlenarDetalleComboBox();
         }
 
-        private void Consultabutton_Click(object sender, EventArgs e)
+        private void LimpiarProducto()
         {
-            CFactura abrir = new CFactura();
-            abrir.Show();
-        }
-
-        private void BuscarDetalllebutton_Click(object sender, EventArgs e)
-        {
-            int ID, id;
-            int.TryParse(DetallenumericUpDown.Text, out ID);
-            id = Convert.ToInt32(IDnumericUpDown.Value);
-
-
             LimpiarProvider();
-            if (SetError(4))
+            CantidadnumericUpDown.Value = 0;
+            DescripcionProductotextBox.Clear();
+            ProductoIdcomboBox.Text = string.Empty;
+            PreciotextBox.Clear();
+            ImportetextBox.Clear();
+            DetallecomboBox.Text = string.Empty;
+        }
+
+        private void FormaDePagocomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(FormaDePagocomboBox.SelectedIndex == 0)
             {
-                MessageBox.Show("Campo Vacio");
-                return;
-            }
-
-            if (BLL.FacturaDetalleBLL.Buscar(ID) != null)
-            {
-
-                DescripcionProductotextBox.Text = BLL.FacturaDetalleBLL.BuscarDetalle(id, ID).Descripcion;
-                PreciotextBox.Text = BLL.FacturaDetalleBLL.BuscarDetalle(id, ID).Precio.ToString();
-                ProductoIDnumericUpDown.Value = BLL.FacturaDetalleBLL.BuscarDetalle(id, ID).ProductoId;
-                CantidadnumericUpDown.Value = BLL.FacturaDetalleBLL.BuscarDetalle(id, ID).Cantidad;
-
+                EfectivonumericUpDown.Enabled = false;
+                paso = false;
             }
             else
             {
-                MessageBox.Show("No encontrado");
+                EfectivonumericUpDown.Enabled = true;
+                paso = true;
             }
+        }
+
+        private void DetallecomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            int ID, id;
+
+            id = Convert.ToInt32(IDcomboBox.Text);
+            ID = Convert.ToInt32(DetallecomboBox.Text);
+            if(billes.BillDetalle.Count()==0)
+            {
+                billes.BillDetalle = BLL.FacturaDetalleBLL.GetList(x => x.FacturaId == id);
+            }
+            foreach (var item in billes.BillDetalle)
+            {
+                if(item.Id==ID)
+                {
+                    DescripcionProductotextBox.Text = item.Descripcion;
+                    PreciotextBox.Text = item.Precio.ToString();
+                    ProductoIdcomboBox.Text = item.ProductoId.ToString();
+                    CantidadnumericUpDown.Value = item.Cantidad;
+                }
+            }
+
+            //DescripcionProductotextBox.Text = BLL.FacturaDetalleBLL.BuscarDetalle(id, ID).Descripcion;
+            //PreciotextBox.Text = BLL.FacturaDetalleBLL.BuscarDetalle(id, ID).Precio.ToString();
+            //ProductoIdcomboBox.Text = BLL.FacturaDetalleBLL.BuscarDetalle(id, ID).ProductoId.ToString();
+            //CantidadnumericUpDown.Value = BLL.FacturaDetalleBLL.BuscarDetalle(id, ID).Cantidad;
+
+
+        }
+
+        private void ProductoIdcomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LimpiarProvider();
+            CantidadnumericUpDown.Value = 0;
+            ImportetextBox.Clear();
+            int id = Convert.ToInt32(ProductoIdcomboBox.Text);
+
+            foreach (var item in BLL.ProductoBLL.GetList(c=> c.Idproducto == id))
+            {
+                DescripcionProductotextBox.Text = item.Descripcion;
+                PreciotextBox.Text = item.Precio.ToString();
+            }
+            
+        }
+
+        private void IDcomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LimpiarProvider();
+            int idfactura = Convert.ToInt32(IDcomboBox.Text);
+
+            var bill = BLL.FacturacionBLL.Buscar(Convert.ToInt32(IDcomboBox.Text));
+            CLienteIDcomboBox.Text = bill.ClienteId.ToString();
+            FormaDePagocomboBox.Text = bill.FormaDePago;
+            DescripciponFacturatextBox.Text = bill.Descripcion;
+            DevueltatextBox.Text = bill.Devuelta.ToString();
+            MontotextBox.Text = bill.Monto.ToString();
+            Monto = bill.Monto;
+            FechadateTimePicker.Value = bill.Fecha;
+            EfectivonumericUpDown.Value = bill.EfectivoRecibido;
+            billes.BillDetalle = BLL.FacturaDetalleBLL.GetList(x => x.FacturaId == idfactura);
+            LlenarDetalleComboBox();
+            DetallecomboBox.Enabled = true;
+            foreach (var item in billes.BillDetalle)
+            {
+                item.Importe = BLL.FacturacionBLL.Importedemas(item.Cantidad, item.Precio);
+            }
+            FacturadataGridView.DataSource = billes.BillDetalle;
+            billes.BillDetalle = new List<FacturaDetalle>();
+
+            bill.BillDetalle = new List<FacturaDetalle>();
+        }
+
+        private void LlenarDetalleComboBox()
+        {
+            DetallecomboBox.Items.Clear();
+            foreach (var item in billes.BillDetalle)
+            {
+                DetallecomboBox.Items.Add(item.Id);
+            }
+        }
+
+        private void CLienteIDcomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LimpiarProvider();
+            NombreCLientetextBox.Text = BLL.ClienteBLL.Buscar(Convert.ToInt32(CLienteIDcomboBox.Text)).Nombre;
         }
     }
 }

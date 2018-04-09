@@ -11,6 +11,8 @@ namespace ProyectoFinal.BLL
 {
    public class FacturacionBLL
     {
+        private static  Usuario user = new Usuario();
+
         public static bool Guardar(Factura bill)
         {
             bool paso = false;
@@ -34,6 +36,29 @@ namespace ProyectoFinal.BLL
             return paso;
         }
 
+        public static bool GuardarDetalle(FacturaDetalle bill)
+        {
+            bool paso = false;
+            Contexto db = new Contexto();
+            try
+            {
+                if (db.Billes.Add(bill) != null)
+                {
+                    db.SaveChanges();
+                    db.Dispose();
+                    paso = true;
+                }
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return paso;
+        }
+
         public static bool Eliminar(int Id)
         {
             bool paso = false;
@@ -41,14 +66,17 @@ namespace ProyectoFinal.BLL
             try
             {
                 var eliminar = db.bill.Find(Id);
-               
-                db.Billes.RemoveRange(db.Billes.Where(x => x.FacturaId == eliminar.FacturaId));
-                db.Entry(eliminar).State = EntityState.Deleted;
-                if (db.SaveChanges() > 0)
+                if (eliminar!=null)
                 {
-                    db.Dispose();
-                    paso = true;
+                    db.Billes.RemoveRange(db.Billes.Where(x => x.FacturaId == eliminar.FacturaId));
+                    db.Entry(eliminar).State = EntityState.Deleted;
+                    if (db.SaveChanges() > 0)
+                    {
+                        db.Dispose();
+                        paso = true;
+                    }
                 }
+                
             }
             catch (Exception)
             {
@@ -61,19 +89,41 @@ namespace ProyectoFinal.BLL
         public static bool Modificar(Factura bill)
         {
             bool paso = false;
+            bool paso1 = false;
             Contexto db = new Contexto();
             try
             {
+                var billes = Buscar(bill.FacturaId);
                 db.Entry(bill).State = EntityState.Modified;
+                
+                ArreglarProducto(billes);
                 foreach (var item in bill.BillDetalle)
                 {
-                    db.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                    if(item.Id==0)
+                    {
+                        GuardarDetalle(item);
+                    }
+                    else
+                    {
+                        db.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                        if (db.SaveChanges() > 0)
+                        {
+                            paso1 = true;
+                            paso = true;
+                        }
+                    }
+                  
+                    
+                }
+                if (paso1 == false)
+                {
                     if (db.SaveChanges() > 0)
                     {
-                       
+                        
                         paso = true;
                     }
                 }
+                DescontarProductos(Buscar(bill.FacturaId).BillDetalle);
 
                 db.Dispose();
 
@@ -95,6 +145,11 @@ namespace ProyectoFinal.BLL
             {
 
                 bill = db.bill.Find(id);
+                if(bill!=null)
+                {
+                    bill.BillDetalle.Count();
+                }
+                
                 db.Dispose();
             }
             catch (Exception)
@@ -130,8 +185,6 @@ namespace ProyectoFinal.BLL
             return factura;
         }
 
-        
-
         public static decimal devuelta(decimal monto, decimal efectivo)
         {
             decimal devuelta = 0;
@@ -148,15 +201,36 @@ namespace ProyectoFinal.BLL
             return monto;
         }
 
-        public static decimal Importe(decimal cantidad, decimal precio)
+        public static decimal Importe(decimal cantidadDefecto,decimal cantidad, decimal precio, int id, int ID)
         {
             decimal importe = 0;
-            importe = cantidad * precio;
+            if (ID == id)
+            {
+
+                importe = cantidad * precio;
+            }
+            else
+            {
+                importe = cantidadDefecto * precio;
+            }
+            
 
             return importe;
         }
 
-        public static void DescontarProductos(List<FacturaDetalle> bill, int cantidad)
+        public static decimal Importedemas(decimal cantidad, decimal precio)
+        {
+            decimal importe = 0;
+           
+            
+                importe = cantidad * precio;
+            
+
+
+            return importe;
+        }
+
+        public static void DescontarProductos(List<FacturaDetalle> bill)
         {
             // Descontar cantidad a productos
             
@@ -172,6 +246,19 @@ namespace ProyectoFinal.BLL
       
             }
 
+        }
+
+        public static void ArreglarProducto(Factura bill)
+        {
+            foreach (var item in bill.BillDetalle)
+            {
+                var producto = BLL.ProductoBLL.Buscar(item.ProductoId);
+
+                producto.Cantidad += item.Cantidad;
+
+                BLL.ProductoBLL.Modificar(producto);
+
+            }
         }
 
         public static List<FacturaDetalle> Editar(List<FacturaDetalle> list, FacturaDetalle factura)
@@ -211,8 +298,45 @@ namespace ProyectoFinal.BLL
             devuelta = efectivo - monto;
             return devuelta;
         }
-       
 
+        public static int Mayor(List<Factura> bill)
+        {
+            int mayor = 0;
+            foreach (var item in bill)
+            {
+                if(mayor==0)
+                {
+                    mayor = item.FacturaId;
+                }else
+                {
+                    if(mayor< item.FacturaId)
+                    {
+                        mayor = item.FacturaId;
+                    }
+                }
+                
+            }
+
+            return mayor;
+        }
+
+        public static void NombreLogin(string nombre, int id)
+        {
+             user.Nombre = nombre;
+            user.IdUsuario = id;
+        }
+        
+        public static Usuario returnUsuario()
+        {
+            return user;
+        }
+       
+        public static decimal RetornarDevuelta( decimal efectivo, decimal monto)
+        {
+            decimal devuelta = CalcularDevuelta(efectivo, monto);
+
+            return devuelta;
+        }
 
     }
 }

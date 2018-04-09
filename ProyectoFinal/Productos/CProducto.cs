@@ -29,40 +29,116 @@ namespace ProyectoFinal.Productos
             {
                 //ID
                 case 0:
+                    LimpiarError();
+                    if (SetError(1))
+                    {
+                        MessageBox.Show("Introduce un numero");
+                        return;
+
+                    }
                     id = int.Parse(CriteriotextBox.Text);
                     filtrar = t => t.Idproducto == id;
                     break;
                 //Descripcion
                 case 1:
-
+                    LimpiarError();
+                    if (SetError(2))
+                    {
+                        MessageBox.Show("Introduce un caracter");
+                        return;
+                    }
                     filtrar = t => t.Descripcion.Contains(CriteriotextBox.Text);
                     break;
                 
                 //Cantidad
-                case 3:
+                case 2:
+                    LimpiarError();
+                    if (SetError(1))
+                    {
+                        MessageBox.Show("Introduce un numero");
+                        return;
 
+                    }
                     filtrar = t => t.Cantidad == Convert.ToInt32(CriteriotextBox.Text);
                     break;
                 //precio
-                case 4:
+                case 3:
+                    LimpiarError();
+                    if (SetError(1))
+                    {
+                        MessageBox.Show("Introduce un numero");
+                        return;
 
+                    }
                     filtrar = t => t.Precio == Convert.ToInt32(CriteriotextBox.Text);
                     break;
                 //idDepartamento
-                case 5:
+                case 4:
+                    LimpiarError();
+                    if (SetError(1))
+                    {
+                        MessageBox.Show("Introduce un numero");
+                        return;
 
-                    filtrar = t => t.DepartamentoId== Convert.ToInt32(CriteriotextBox.Text);
+                    }
+                    filtrar = t => t.DepartamentoId == Convert.ToInt32(CriteriotextBox.Text);
                     break;
+
+                //Listar Todo
+                case 5:
+                    
+                    filtrar = x => true;
+                    break;
+
+                  
             }
 
 
             ConsultadataGridView.DataSource = BLL.ProductoBLL.GetList(filtrar);
         }
 
+        private bool SetError(int error)
+        {
+            bool paso = false;
+            int ejem = 0;
+            if (error == 1 && int.TryParse(CriteriotextBox.Text, out ejem) == false)
+            {
+                TexterrorProvider.SetError(CriteriotextBox, "Debe de introducir un numero");
+                paso = true;
+            }
+            if (error == 2 && int.TryParse(CriteriotextBox.Text, out ejem) == true)
+            {
+                TexterrorProvider.SetError(CriteriotextBox, "Debe de introducir un caracter");
+                paso = true;
+            }
+
+            return paso;
+        }
+
+        private void LimpiarError()
+        {
+            TexterrorProvider.Clear();
+        }
+
         private void ReporteButton_Click(object sender, EventArgs e)
         {
             ReporteProducto abri = new ReporteProducto(BLL.ProductoBLL.GetList(filtrar));
             abri.Show();
+        }
+
+        private void TipocomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CriteriotextBox.Clear();
+            LimpiarError();
+            if (TipocomboBox.SelectedIndex == 5)
+            {
+                CriteriotextBox.Enabled = false;
+
+            }
+            else
+            {
+                CriteriotextBox.Enabled = true;
+            }
         }
     }
 }

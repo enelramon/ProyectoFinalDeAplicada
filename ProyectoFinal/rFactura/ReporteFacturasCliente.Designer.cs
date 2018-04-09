@@ -1,6 +1,6 @@
 ﻿namespace ProyectoFinal.rFactura
 {
-    partial class ReporteFacturas
+    partial class ReporteFacturasCliente
     {
         /// <summary>
         /// Required designer variable.
@@ -28,30 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReporteFacturas));
-            this.ReporteDeFacturaViewer = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReporteFacturasCliente));
+            this.ReporteFacturaViewer = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.SuspendLayout();
             // 
-            // ReporteDeFacturaViewer
+            // ReporteFacturaViewer
             // 
-            this.ReporteDeFacturaViewer.ActiveViewIndex = -1;
-            this.ReporteDeFacturaViewer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ReporteDeFacturaViewer.Cursor = System.Windows.Forms.Cursors.Default;
-            this.ReporteDeFacturaViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ReporteDeFacturaViewer.Location = new System.Drawing.Point(0, 0);
-            this.ReporteDeFacturaViewer.Name = "ReporteDeFacturaViewer";
-            this.ReporteDeFacturaViewer.Size = new System.Drawing.Size(813, 458);
-            this.ReporteDeFacturaViewer.TabIndex = 0;
-            this.ReporteDeFacturaViewer.Load += new System.EventHandler(this.ReporteDeFacturaViewer_Load);
+            this.ReporteFacturaViewer.ActiveViewIndex = -1;
+            this.ReporteFacturaViewer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ReporteFacturaViewer.Cursor = System.Windows.Forms.Cursors.Default;
+            this.ReporteFacturaViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ReporteFacturaViewer.Location = new System.Drawing.Point(0, 0);
+            this.ReporteFacturaViewer.Name = "ReporteFacturaViewer";
+            this.ReporteFacturaViewer.Size = new System.Drawing.Size(696, 509);
+            this.ReporteFacturaViewer.TabIndex = 0;
+            this.ReporteFacturaViewer.Load += new System.EventHandler(this.ReporteFacturaViewer_Load);
             // 
-            // ReporteFactura
+            // ReporteFacturasCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(813, 458);
-            this.Controls.Add(this.ReporteDeFacturaViewer);
+            this.ClientSize = new System.Drawing.Size(696, 509);
+            this.Controls.Add(this.ReporteFacturaViewer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "ReporteFactura";
+            this.Name = "ReporteFacturasCliente";
             this.Text = "Reporte de Factura";
             this.ResumeLayout(false);
 
@@ -59,6 +59,6 @@
 
         #endregion
 
-        private CrystalDecisions.Windows.Forms.CrystalReportViewer ReporteDeFacturaViewer;
+        private CrystalDecisions.Windows.Forms.CrystalReportViewer ReporteFacturaViewer;
     }
 }

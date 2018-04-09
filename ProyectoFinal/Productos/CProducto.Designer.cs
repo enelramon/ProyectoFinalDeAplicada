@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CProducto));
             this.TipocomboBox = new System.Windows.Forms.ComboBox();
             this.CriteriotextBox = new System.Windows.Forms.TextBox();
@@ -36,7 +37,9 @@
             this.ConsultadataGridView = new System.Windows.Forms.DataGridView();
             this.Consultabutton = new System.Windows.Forms.Button();
             this.ReporteButton = new System.Windows.Forms.Button();
+            this.TexterrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ConsultadataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TexterrorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // TipocomboBox
@@ -47,11 +50,13 @@
             "Descripcion",
             "Cantidad ",
             "Precio",
-            "IdDepartamento"});
+            "IdDepartamento",
+            "Listar Todo"});
             this.TipocomboBox.Location = new System.Drawing.Point(5, 25);
             this.TipocomboBox.Name = "TipocomboBox";
             this.TipocomboBox.Size = new System.Drawing.Size(121, 21);
             this.TipocomboBox.TabIndex = 32;
+            this.TipocomboBox.SelectedIndexChanged += new System.EventHandler(this.TipocomboBox_SelectedIndexChanged);
             // 
             // CriteriotextBox
             // 
@@ -110,6 +115,11 @@
             this.ReporteButton.UseVisualStyleBackColor = true;
             this.ReporteButton.Click += new System.EventHandler(this.ReporteButton_Click);
             // 
+            // TexterrorProvider
+            // 
+            this.TexterrorProvider.ContainerControl = this;
+            this.TexterrorProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("TexterrorProvider.Icon")));
+            // 
             // CProducto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -128,6 +138,7 @@
             this.Name = "CProducto";
             this.Text = "Consulta de productos";
             ((System.ComponentModel.ISupportInitialize)(this.ConsultadataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TexterrorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,5 +152,6 @@
         private System.Windows.Forms.Label Tipo;
         private System.Windows.Forms.DataGridView ConsultadataGridView;
         private System.Windows.Forms.Button ReporteButton;
+        private System.Windows.Forms.ErrorProvider TexterrorProvider;
     }
 }

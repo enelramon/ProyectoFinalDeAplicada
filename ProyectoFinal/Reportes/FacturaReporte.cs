@@ -16,14 +16,14 @@ namespace ProyectoFinal.Reportes {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class ReporteFactura : ReportClass {
+    public class FacturaReporte : ReportClass {
         
-        public ReporteFactura() {
+        public FacturaReporte() {
         }
         
         public override string ResourceName {
             get {
-                return "ReporteFactura.rpt";
+                return "FacturaReporte.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace ProyectoFinal.Reportes {
         
         public override string FullResourceName {
             get {
-                return "ProyectoFinal.Reportes.ReporteFactura.rpt";
+                return "ProyectoFinal.Reportes.FacturaReporte.rpt";
             }
             set {
                 // Do nothing
@@ -66,7 +66,7 @@ namespace ProyectoFinal.Reportes {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section PageHeaderSection1 {
+        public CrystalDecisions.CrystalReports.Engine.Section GroupHeaderSection1 {
             get {
                 return this.ReportDefinition.Sections[2];
             }
@@ -74,7 +74,7 @@ namespace ProyectoFinal.Reportes {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section GroupHeaderSection1 {
+        public CrystalDecisions.CrystalReports.Engine.Section Section3 {
             get {
                 return this.ReportDefinition.Sections[3];
             }
@@ -82,7 +82,7 @@ namespace ProyectoFinal.Reportes {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section3 {
+        public CrystalDecisions.CrystalReports.Engine.Section GroupFooterSection1 {
             get {
                 return this.ReportDefinition.Sections[4];
             }
@@ -90,7 +90,7 @@ namespace ProyectoFinal.Reportes {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section GroupFooterSection1 {
+        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
             get {
                 return this.ReportDefinition.Sections[5];
             }
@@ -98,25 +98,17 @@ namespace ProyectoFinal.Reportes {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
-            get {
-                return this.ReportDefinition.Sections[6];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public CrystalDecisions.CrystalReports.Engine.Section Section5 {
             get {
-                return this.ReportDefinition.Sections[7];
+                return this.ReportDefinition.Sections[6];
             }
         }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedReporteFactura : Component, ICachedReport {
+    public class CachedFacturaReporte : Component, ICachedReport {
         
-        public CachedReporteFactura() {
+        public CachedFacturaReporte() {
         }
         
         [Browsable(false)]
@@ -153,7 +145,7 @@ namespace ProyectoFinal.Reportes {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            ReporteFactura rpt = new ReporteFactura();
+            FacturaReporte rpt = new FacturaReporte();
             rpt.Site = this.Site;
             return rpt;
         }

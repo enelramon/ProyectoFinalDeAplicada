@@ -51,7 +51,11 @@ namespace ProyectoFinal
 
             if (user.Exists(x => x.NombreUsuario == UsuariologtextBox.Text) && user.Exists(x => x.Clave == ClavetextBox.Text))
             {
-
+                foreach (var item in BLL.UsuarioBLL.GetList(x => x.NombreUsuario == UsuariologtextBox.Text))
+                {
+                    BLL.FacturacionBLL.NombreLogin(item.Nombre,item.IdUsuario);
+                }
+               
                 MasVenta abrir = new MasVenta();
                 abrir.Show();
 

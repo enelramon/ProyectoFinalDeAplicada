@@ -17,6 +17,7 @@ namespace ProyectoFinal.RDepartamento
         public rDepartamento()
         {
             InitializeComponent();
+            LlenarComboBox();
         }
 
         private void Eliminarbutton_Click(object sender, EventArgs e)
@@ -28,10 +29,14 @@ namespace ProyectoFinal.RDepartamento
                 return;
             }
 
-            if(BLL.DepartamentoBLL.Eliminar(Convert.ToInt32(IdnumericUpDown.Value)))
+            if(BLL.DepartamentoBLL.Eliminar(Convert.ToInt32(IDcomboBox.Text)))
             {
                 MessageBox.Show("Eliminado!!");
-                return;
+                IDcomboBox.DataSource = null;
+                LlenarComboBox();
+                Clear();
+
+
             }
             else
             {
@@ -41,8 +46,13 @@ namespace ProyectoFinal.RDepartamento
 
         private void Nuevobutton_Click(object sender, EventArgs e)
         {
+            Clear();
+        }
+
+        private void Clear()
+        {
             NombretextBox.Clear();
-            IdnumericUpDown.Value = 0;
+            IDcomboBox.Text = string.Empty;
             LimpiarProvider();
         }
 
@@ -55,9 +65,9 @@ namespace ProyectoFinal.RDepartamento
         private bool SetError(int error)
         {
             bool paso = false;
-            if (error==1&&IdnumericUpDown.Value ==0)
+            if (error==1&& IDcomboBox.Text == string.Empty)
             {
-                IderrorProvider.SetError(IdnumericUpDown, "Llenar Campo Id");
+                IderrorProvider.SetError(IDcomboBox, "Llenar Campo Id");
                 paso = true;
             }
             if (error ==2&&NombretextBox.Text == string.Empty)
@@ -79,12 +89,15 @@ namespace ProyectoFinal.RDepartamento
             }
             Departamento depo = LlenaClase();
 
-            if(IdnumericUpDown.Value==0)
+            if(IDcomboBox.Text==string.Empty)
             {
                 if (BLL.DepartamentoBLL.Guardar(depo))
                 {
                     MessageBox.Show("Guardado!!");
-                    
+                    IDcomboBox.DataSource = null;
+                    LlenarComboBox();
+                    Clear();
+
                 }
                 else
                 {
@@ -112,39 +125,35 @@ namespace ProyectoFinal.RDepartamento
         private Departamento LlenaClase()
         {
             Departamento depo = new Departamento();
+            if (IDcomboBox.Text == string.Empty)
+            {
+                depo.DepartamentoId = 0;
+            }
+            else {
+                depo.DepartamentoId = Convert.ToInt32(IDcomboBox.Text);
+            }
 
-            depo.DepartamentoId = Convert.ToInt32(IdnumericUpDown.Value);
+                
             depo.Nombre = NombretextBox.Text;
             return depo;
         }
 
-        private void Buscarbutton_Click(object sender, EventArgs e)
+        private void IDcomboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             LimpiarProvider();
-            Departamento depo = new Departamento();
-            if (SetError(1))
-            {
-                MessageBox.Show("Llenar Campos faltantes");
-                return;
-            }
-
-            depo = BLL.DepartamentoBLL.Buscar(Convert.ToInt32(IdnumericUpDown.Value));
-            if (depo != null)
-            {
-                NombretextBox.Text = depo.Nombre;
-            }
-            else
-            {
-                MessageBox.Show("Departamento no encontrado!!");
-                return;
-            }
+            var depo = BLL.DepartamentoBLL.Buscar(Convert.ToInt32(IDcomboBox.Text));
+            NombretextBox.Text = depo.Nombre;
         }
 
-        private void Consultabutton_Click(object sender, EventArgs e)
+        private void LlenarComboBox()
         {
-            CDepartamento abrir = new CDepartamento();
-            abrir.Show();
-        }
+            IDcomboBox.Items.Clear();
+            foreach (var item in BLL.DepartamentoBLL.GetList(x => true))
+            {
+                IDcomboBox.Items.Add(item.DepartamentoId);
+            }
 
+
+        }
     }
 }

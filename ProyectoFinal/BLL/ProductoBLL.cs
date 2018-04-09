@@ -43,12 +43,16 @@ namespace ProyectoFinal.BLL
             {
                 Contexto db = new Contexto();
                 var producto = db.product.Find(id);
-                db.Entry(producto).State = EntityState.Deleted;
-                if(db.SaveChanges()>0)
+                if(producto!=null)
                 {
-                    paso = true;
-                    db.Dispose();
+                    db.Entry(producto).State = EntityState.Deleted;
+                    if (db.SaveChanges() > 0)
+                    {
+                        paso = true;
+                        db.Dispose();
+                    }
                 }
+                
             }
             catch (Exception)
             {

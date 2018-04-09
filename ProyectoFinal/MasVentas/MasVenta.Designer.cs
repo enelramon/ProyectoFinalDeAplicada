@@ -38,6 +38,12 @@
             this.editarDepartamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.despacharToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.facturacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultaDeUsuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultaDeClienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultaDeProductosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultaDeDepartamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultaDeFacturaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,7 +52,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.opcionesToolStripMenuItem,
             this.editarToolStripMenuItem,
-            this.despacharToolStripMenuItem});
+            this.despacharToolStripMenuItem,
+            this.consultasToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(931, 24);
@@ -115,9 +122,61 @@
             // 
             this.facturacionToolStripMenuItem.Image = global::ProyectoFinal.Properties.Resources.icons8_Bill_16;
             this.facturacionToolStripMenuItem.Name = "facturacionToolStripMenuItem";
-            this.facturacionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.facturacionToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.facturacionToolStripMenuItem.Text = "Facturacion";
             this.facturacionToolStripMenuItem.Click += new System.EventHandler(this.facturacionToolStripMenuItem_Click);
+            // 
+            // consultasToolStripMenuItem
+            // 
+            this.consultasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.consultaDeUsuarioToolStripMenuItem,
+            this.consultaDeClienteToolStripMenuItem,
+            this.consultaDeProductosToolStripMenuItem,
+            this.consultaDeDepartamentoToolStripMenuItem,
+            this.consultaDeFacturaToolStripMenuItem});
+            this.consultasToolStripMenuItem.Name = "consultasToolStripMenuItem";
+            this.consultasToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.consultasToolStripMenuItem.Text = "Consultas";
+            // 
+            // consultaDeUsuarioToolStripMenuItem
+            // 
+            this.consultaDeUsuarioToolStripMenuItem.Image = global::ProyectoFinal.Properties.Resources.icons8_Customer_16;
+            this.consultaDeUsuarioToolStripMenuItem.Name = "consultaDeUsuarioToolStripMenuItem";
+            this.consultaDeUsuarioToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.consultaDeUsuarioToolStripMenuItem.Text = "Consulta de Usuario";
+            this.consultaDeUsuarioToolStripMenuItem.Click += new System.EventHandler(this.consultaDeUsuarioToolStripMenuItem_Click);
+            // 
+            // consultaDeClienteToolStripMenuItem
+            // 
+            this.consultaDeClienteToolStripMenuItem.Image = global::ProyectoFinal.Properties.Resources.icons8_Custosmer_32;
+            this.consultaDeClienteToolStripMenuItem.Name = "consultaDeClienteToolStripMenuItem";
+            this.consultaDeClienteToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.consultaDeClienteToolStripMenuItem.Text = "Consulta de Cliente";
+            this.consultaDeClienteToolStripMenuItem.Click += new System.EventHandler(this.consultaDeClienteToolStripMenuItem_Click);
+            // 
+            // consultaDeProductosToolStripMenuItem
+            // 
+            this.consultaDeProductosToolStripMenuItem.Image = global::ProyectoFinal.Properties.Resources.icons8_Product_16;
+            this.consultaDeProductosToolStripMenuItem.Name = "consultaDeProductosToolStripMenuItem";
+            this.consultaDeProductosToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.consultaDeProductosToolStripMenuItem.Text = "Consulta de Productos";
+            this.consultaDeProductosToolStripMenuItem.Click += new System.EventHandler(this.consultaDeProductosToolStripMenuItem_Click);
+            // 
+            // consultaDeDepartamentoToolStripMenuItem
+            // 
+            this.consultaDeDepartamentoToolStripMenuItem.Image = global::ProyectoFinal.Properties.Resources.icons8_Category_16;
+            this.consultaDeDepartamentoToolStripMenuItem.Name = "consultaDeDepartamentoToolStripMenuItem";
+            this.consultaDeDepartamentoToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.consultaDeDepartamentoToolStripMenuItem.Text = "Consulta de Departamento";
+            this.consultaDeDepartamentoToolStripMenuItem.Click += new System.EventHandler(this.consultaDeDepartamentoToolStripMenuItem_Click);
+            // 
+            // consultaDeFacturaToolStripMenuItem
+            // 
+            this.consultaDeFacturaToolStripMenuItem.Image = global::ProyectoFinal.Properties.Resources.icons8_Bill_16;
+            this.consultaDeFacturaToolStripMenuItem.Name = "consultaDeFacturaToolStripMenuItem";
+            this.consultaDeFacturaToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.consultaDeFacturaToolStripMenuItem.Text = "Consulta de Factura";
+            this.consultaDeFacturaToolStripMenuItem.Click += new System.EventHandler(this.consultaDeFacturaToolStripMenuItem_Click);
             // 
             // MasVenta
             // 
@@ -149,5 +208,11 @@
         private System.Windows.Forms.ToolStripMenuItem crearClienteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem despacharToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem facturacionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultaDeUsuarioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultaDeClienteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultaDeProductosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultaDeDepartamentoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultaDeFacturaToolStripMenuItem;
     }
 }

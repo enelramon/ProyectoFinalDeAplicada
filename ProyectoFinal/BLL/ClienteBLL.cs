@@ -41,12 +41,16 @@ namespace ProyectoFinal.BLL
             try
             {
                 var eliminar = db.customer.Find(Id);
-                db.Entry(eliminar).State = EntityState.Deleted;
-                if (db.SaveChanges() > 0)
+                if(eliminar!=null)
                 {
-                    db.Dispose();
-                    paso = true;
+                    db.Entry(eliminar).State = EntityState.Deleted;
+                    if (db.SaveChanges() > 0)
+                    {
+                        db.Dispose();
+                        paso = true;
+                    }
                 }
+                
             }
             catch (Exception)
             {

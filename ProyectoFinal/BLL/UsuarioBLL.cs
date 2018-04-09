@@ -40,11 +40,15 @@ namespace ProyectoFinal.BLL
             try
             {
                 var eliminar = db.user.Find(Id);
-                db.Entry(eliminar).State = EntityState.Deleted;
-                if (db.SaveChanges() > 0)
+                if(eliminar!=null)
                 {
-                    paso = true;
+                    db.Entry(eliminar).State = EntityState.Deleted;
+                    if (db.SaveChanges() > 0)
+                    {
+                        paso = true;
+                    }
                 }
+                
             }
             catch (Exception)
             {
@@ -106,5 +110,7 @@ namespace ProyectoFinal.BLL
             }
             return usuario;
         }
+
+       
     }
 }
