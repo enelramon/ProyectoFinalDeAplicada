@@ -173,12 +173,6 @@
     <Compile Include="rFactura\CFactura.Designer.cs">
       <DependentUpon>CFactura.cs</DependentUpon>
     </Compile>
-    <Compile Include="rFactura\reporte.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="rFactura\reporte.Designer.cs">
-      <DependentUpon>reporte.cs</DependentUpon>
-    </Compile>
     <Compile Include="rFactura\ReporteFacturas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -289,9 +283,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="rFactura\CFactura.resx">
       <DependentUpon>CFactura.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="rFactura\reporte.resx">
-      <DependentUpon>reporte.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="rFactura\ReporteFacturas.resx">
       <DependentUpon>ReporteFacturas.cs</DependentUpon>
